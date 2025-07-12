@@ -6,19 +6,24 @@ public class Player : MonoBehaviour
 {
     public PlayerIdleState IdleState;
     public PlayerWalkState WalkState;
+    public PlayerMoveState RunState;
+    
     public PlayerStateMachine StateMachine;
     
     [SerializeField] public float moveSpeed = 7f;
 
-    public Animator anim;
-    public Camera mainCamera;
+    public Animator Anim { get; private set; }
+    public Camera MainCamera {get; private set;}
+    public CharacterController CharacterControl {get; private set;}
+    
     public Vector2 moveInput;
 
     private void Awake()
     {
-        mainCamera = Camera.main; 
-        anim = GetComponentInChildren<Animator>();
-        if(anim == null) Debug.LogError("No animator found");
+        MainCamera = Camera.main; 
+        Anim = GetComponentInChildren<Animator>();
+        CharacterControl = GetComponent<CharacterController>();
+        if(Anim == null) Debug.LogError("No animator found");
     }
 
     private void Start()
@@ -26,6 +31,7 @@ public class Player : MonoBehaviour
         StateMachine = new PlayerStateMachine();
         this.IdleState = new PlayerIdleState(StateMachine, this, "IsIdling");
         this.WalkState = new PlayerWalkState(StateMachine, this, "IsWalking");
+        this.RunState = new PlayerRunState(StateMachine, this, "IsRunning");
         
         StateMachine.Initialize(IdleState);
     }

@@ -6,9 +6,10 @@ public class PlayerState
 {
    protected Player Player;
    protected PlayerStateMachine StateMachine;
-
+   
    private string _animBoolName;
 
+   protected float StartTime;
    public PlayerState(PlayerStateMachine stateMachine, Player player, string animBoolName)
    {
       this.StateMachine = stateMachine;
@@ -18,12 +19,13 @@ public class PlayerState
 
    public virtual void Enter()
    {
-      Player.anim.SetBool(_animBoolName, true);   
+      Player.Anim.SetBool(_animBoolName, true);
+      StartTime = Time.time;
    }
 
    public virtual void Exit()
    {
-      Player.anim.SetBool(_animBoolName, false);
+      Player.Anim.SetBool(_animBoolName, false);
    }
 
    public virtual void LogicUpdate()
