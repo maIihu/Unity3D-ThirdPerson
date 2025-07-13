@@ -20,6 +20,8 @@ public class PlayerWalkState : PlayerMoveState
         {
             Player.StateMachine.ChangeState(Player.RunState);
         }
+    
+        
         Move(Player.moveSpeed);
     }
     

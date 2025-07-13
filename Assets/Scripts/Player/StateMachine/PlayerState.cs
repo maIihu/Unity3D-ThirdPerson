@@ -21,6 +21,7 @@ public class PlayerState
    {
       Player.Anim.SetBool(_animBoolName, true);
       StartTime = Time.time;
+      Debug.Log("State: " + _animBoolName);
    }
 
    public virtual void Exit()

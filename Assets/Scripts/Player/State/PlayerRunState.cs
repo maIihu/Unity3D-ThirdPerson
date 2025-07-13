@@ -25,6 +25,7 @@ public class PlayerRunState : PlayerMoveState
         {
             Player.StateMachine.ChangeState(Player.IdleState);
         }
+
         Move(Player.moveSpeed * 2);
         
         HandleRunStateDuration();

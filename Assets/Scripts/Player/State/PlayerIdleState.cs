@@ -15,5 +15,12 @@ public class PlayerIdleState : PlayerGroundedState
         {
             StateMachine.ChangeState(Player.WalkState);
         }
+
+        if (Player.CharacterControl.isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            StateMachine.ChangeState(Player.JumpState);
+        }
     }
+    
+    
 }

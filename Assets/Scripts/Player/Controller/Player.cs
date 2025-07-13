@@ -7,17 +7,21 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState;
     public PlayerWalkState WalkState;
     public PlayerMoveState RunState;
+    public PlayerJumpState JumpState;
     
     public PlayerStateMachine StateMachine;
     
     [SerializeField] public float moveSpeed = 7f;
-
+    [SerializeField] public float jumpForce = 8f;
+    [SerializeField] public float gravityMultiplier = 3f;
+    
+    public Vector3 moveDirection;
+    
     public Animator Anim { get; private set; }
     public Camera MainCamera {get; private set;}
     public CharacterController CharacterControl {get; private set;}
-    
     public Vector2 moveInput;
-
+    
     private void Awake()
     {
         MainCamera = Camera.main; 
@@ -32,6 +36,7 @@ public class Player : MonoBehaviour
         this.IdleState = new PlayerIdleState(StateMachine, this, "IsIdling");
         this.WalkState = new PlayerWalkState(StateMachine, this, "IsWalking");
         this.RunState = new PlayerRunState(StateMachine, this, "IsRunning");
+        this.JumpState = new PlayerJumpState(StateMachine, this, "IsJumping");
         
         StateMachine.Initialize(IdleState);
     }
