@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBase : MonoBehaviour, IAttackable
+public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
     [SerializeField] private Transform targetPlayer;
     [SerializeField] private GameObject bulletPrefab;
@@ -14,6 +14,8 @@ public class EnemyBase : MonoBehaviour, IAttackable
     [SerializeField] private EnemyData data;
     
     private float _lastAttackTime;
+    private float _health;
+    private float _maxHealth;
     
     public BulletOwner BulletOwner { get; set; }
     
@@ -27,6 +29,8 @@ public class EnemyBase : MonoBehaviour, IAttackable
     private void Start()
     {
         BulletOwner = BulletOwner.Enemy;
+        _maxHealth = _health = data.health;
+        OnHealthChanged?.Invoke(_health, _maxHealth);
     }
 
     private void ChaseToPlayerTarget()
@@ -76,6 +80,7 @@ public class EnemyBase : MonoBehaviour, IAttackable
         if(bulletObject.TryGetComponent(out BulletProjectile bulletProjectile))
         {
             bulletProjectile.bulletOwner = BulletOwner.Enemy;
+            bulletProjectile.damage =  data.damage;
             bulletProjectile.Launch();
         }
     }
@@ -85,8 +90,13 @@ public class EnemyBase : MonoBehaviour, IAttackable
         return Team.Enemy;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
-        Debug.Log("DAMAGE TO PLAYER");
+        _health -= damage;
+        OnHealthChanged?.Invoke(_health, _maxHealth);
     }
+
+    public float CurrentHealth => _maxHealth;
+    public float MaxHealth => _health;
+    public event Action<float, float> OnHealthChanged;
 }

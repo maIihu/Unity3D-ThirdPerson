@@ -13,6 +13,7 @@ public class BulletProjectile : MonoBehaviour
     [SerializeField] float speed = 14f;
     private Rigidbody _bulletRigidBody;
     public BulletOwner bulletOwner;
+    public float damage;
     
     private void Awake()
     {
@@ -31,14 +32,12 @@ public class BulletProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.TryGetComponent(out IAttackable attackable))
         {
             if ((bulletOwner == BulletOwner.Player && attackable.GetTeam() == Team.Enemy) ||
                 (bulletOwner == BulletOwner.Enemy && attackable.GetTeam() == Team.Player))
             {
-                Debug.Log("BULLET");
-                attackable.TakeDamage();
+                attackable.TakeDamage(damage);
             }
         }
         BulletObjectPool.Instance.ReturnBulletObject(gameObject);

@@ -3,27 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour, IAttackable
+public static class PlayerString
+{
+    public static string AttackTrigger = "Attack";
+}
+
+public class PlayerAttack : MonoBehaviour, IAttackable, IHasHealth
 {
     [SerializeField] private LayerMask aimColliderLayerMask = new  LayerMask();
     [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private Transform spawnBulletPoint;
+    [SerializeField] private PlayerData data;
     
     [SerializeField] private Animator anim;
+    
     private Vector3 _mouseWorldPos;
+    private float _health;
+    private float _maxHealth;
     
     public BulletOwner BulletOwner { get; set; }
 
     private void Start()
     {
         BulletOwner = BulletOwner.Player;
+        _maxHealth = _health = data.health;
+        OnHealthChanged?.Invoke(_health, _maxHealth);
+
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            anim.SetTrigger("Attack");
+            anim.SetTrigger(PlayerString.AttackTrigger);
             
             Vector3 aimDir = (_mouseWorldPos - spawnBulletPoint.position).normalized;
             
@@ -34,6 +46,7 @@ public class PlayerAttack : MonoBehaviour, IAttackable
             if(bulletObject.TryGetComponent(out BulletProjectile bulletProjectile))
             {
                 bulletProjectile.bulletOwner = BulletOwner.Player;
+                bulletProjectile.damage =  data.damage;
                 bulletProjectile.Launch();
             }
         }
@@ -50,11 +63,16 @@ public class PlayerAttack : MonoBehaviour, IAttackable
 
     public Team GetTeam()
     {
-        return  Team.Player;
+        return Team.Player;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
-        Debug.Log("PLAYER TAKE DAMAGE");
+        _health -= damage;
+        OnHealthChanged?.Invoke(_health, _maxHealth);
     }
+
+    public float CurrentHealth => _maxHealth;
+    public float MaxHealth => _health;
+    public event Action<float, float> OnHealthChanged;
 }

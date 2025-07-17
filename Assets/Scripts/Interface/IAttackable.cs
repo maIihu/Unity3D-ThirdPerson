@@ -10,5 +10,5 @@ public enum Team
 public interface IAttackable
 {
     public Team GetTeam();
-    public void TakeDamage();
+    public void TakeDamage(float damage);
 }

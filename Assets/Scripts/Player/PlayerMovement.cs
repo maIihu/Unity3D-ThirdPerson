@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
+    
+    [Header("Interact")]
+    [SerializeField] private Transform interactPoint;
+    [SerializeField] private float distance;
+    [SerializeField] private LayerMask layerMask;
     
     private CharacterController _controller;
 
@@ -42,6 +48,13 @@ public class PlayerMovement : MonoBehaviour
         {
             _playerVelocity.y += _gravity * _gravityMultiplier * Time.deltaTime;
         }
+        Interact();
+    }
+    
+    private void FixedUpdate()
+    {
+        _controller.Move(transform.TransformDirection(_moveDirection) * (moveSpeed * Time.deltaTime));
+        _controller.Move(_playerVelocity * Time.deltaTime);
     }
 
     private void InputHandler()
@@ -53,18 +66,25 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) _moveInput.x += 1f;
         _moveInput.Normalize();
     }
-
-    private void FixedUpdate()
-    {
-        _controller.Move(transform.TransformDirection(_moveDirection) * (moveSpeed * Time.deltaTime));
-        _controller.Move(_playerVelocity * Time.deltaTime);
-    }
-
+    
     private void Jump()
     {
         if (_controller.isGrounded && Input.GetButtonDown("Jump"))
         {
             _playerVelocity.y = Mathf.Sqrt(jumpForce * -2f * _gravity);
+        }
+    }
+
+    private void Interact()
+    {
+        Ray ray = new Ray(interactPoint.position, interactPoint.forward);
+        Debug.DrawRay(interactPoint.position, interactPoint.forward * distance, Color.red);
+        if (Physics.Raycast(ray, out var hitInfo, distance, layerMask))
+        {
+            if (hitInfo.collider.TryGetComponent<IInteractable>(out var objInteract))
+            {
+                objInteract.Interact();
+            }
         }
     }
 }
