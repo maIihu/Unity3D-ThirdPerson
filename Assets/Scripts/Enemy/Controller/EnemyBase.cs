@@ -94,6 +94,8 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     {
         _health -= damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
+        if(_health <= 0)
+            Destroy(this.gameObject);
     }
 
     public float CurrentHealth => _maxHealth;
