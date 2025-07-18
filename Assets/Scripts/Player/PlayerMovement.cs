@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
     private void Interact()
     {
         Ray ray = new Ray(interactPoint.position, interactPoint.forward);
-        Debug.DrawRay(interactPoint.position, interactPoint.forward * distance, Color.red);
+        //Debug.DrawRay(interactPoint.position, interactPoint.forward * distance, Color.red);
         if (Physics.Raycast(ray, out var hitInfo, distance, layerMask))
         {
             if (hitInfo.collider.TryGetComponent<IInteractable>(out var objInteract))

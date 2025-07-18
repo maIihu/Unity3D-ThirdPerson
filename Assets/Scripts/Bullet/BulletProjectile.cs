@@ -3,43 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BulletOwner
-{
-    Enemy, Player
-}
-
 public class BulletProjectile : MonoBehaviour
 {
-    [SerializeField] float speed = 14f;
-    private Rigidbody _bulletRigidBody;
-    public BulletOwner bulletOwner;
-    public float damage;
+    [SerializeField] private float speed;
+
+    private Vector3 _targetPos;
+    private bool _isFlying;
     
-    private void Awake()
+    public void Launch(Vector3 targetPos)
     {
-        _bulletRigidBody = GetComponent<Rigidbody>();
+        _targetPos = targetPos;
+        _isFlying = true;
     }
 
-    public void Launch()
+    private void Update()
     {
-        _bulletRigidBody.velocity = transform.forward * speed;
+        if (_isFlying)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _targetPos, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, _targetPos) < 0.1f)
+            {
+                BulletObjectPool.Instance.ReturnBulletObject(gameObject);
+                _isFlying = false;
+            }
+        }
     }
 
     private void OnDisable()
     {
-        _bulletRigidBody.velocity = Vector3.zero;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out IAttackable attackable))
-        {
-            if ((bulletOwner == BulletOwner.Player && attackable.GetTeam() == Team.Enemy) ||
-                (bulletOwner == BulletOwner.Enemy && attackable.GetTeam() == Team.Player))
-            {
-                attackable.TakeDamage(damage);
-            }
-        }
-        BulletObjectPool.Instance.ReturnBulletObject(gameObject);
+        _isFlying = false;
     }
 }

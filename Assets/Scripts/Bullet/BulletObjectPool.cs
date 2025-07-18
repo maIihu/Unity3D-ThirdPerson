@@ -49,7 +49,6 @@ public class BulletObjectPool : MonoBehaviour
 
     public void ReturnBulletObject(GameObject bulletObj)
     {
-        bulletObj.GetComponent<Rigidbody>().velocity = Vector3.zero;
         bulletObj.SetActive(false);
     }
 }

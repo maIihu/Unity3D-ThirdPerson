@@ -17,8 +17,6 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     private float _health;
     private float _maxHealth;
     
-    public BulletOwner BulletOwner { get; set; }
-    
     private NavMeshAgent _agent;
     
     private void Awake()
@@ -28,7 +26,6 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 
     private void Start()
     {
-        BulletOwner = BulletOwner.Enemy;
         _maxHealth = _health = data.health;
         OnHealthChanged?.Invoke(_health, _maxHealth);
     }
@@ -54,7 +51,7 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     private void Update()
     {
         ChaseToPlayerTarget();
-        Attack();
+        //Attack();
     }
    
     private void Attack()
@@ -71,24 +68,9 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 
     private void FireBullet()
     {
-        Vector3 directionToPlayer = (targetPlayer.transform.position - transform.position).normalized;
         
-        var bulletObject = bulletObjectPool.GetBulletObject();
-        bulletObject.transform.position = spawnBulletPoint.position;
-        bulletObject.transform.rotation = Quaternion.LookRotation(directionToPlayer);
-            
-        if(bulletObject.TryGetComponent(out BulletProjectile bulletProjectile))
-        {
-            bulletProjectile.bulletOwner = BulletOwner.Enemy;
-            bulletProjectile.damage =  data.damage;
-            bulletProjectile.Launch();
-        }
     }
 
-    public Team GetTeam()
-    {
-        return Team.Enemy;
-    }
 
     public void TakeDamage(float damage)
     {
