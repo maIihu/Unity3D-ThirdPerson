@@ -309,7 +309,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 240, y: 400}
@@ -1912,7 +1912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletObjectPool: {fileID: 2022842499}
   spawnBulletPoint: {fileID: 719992127}
-  attackRaycastDistance: 100
+  attackRaycastDistance: 50
   data: {fileID: 11400000, guid: 5799ff7e622ff7a45b7c261ed6b1e578, type: 2}
   anim: {fileID: 1155012119}
   fpsCamera: {fileID: 1598177545}
@@ -1950,6 +1950,7 @@ GameObject:
   - component: {fileID: 1674537726}
   - component: {fileID: 1674537728}
   - component: {fileID: 1674537727}
+  - component: {fileID: 1674537729}
   m_Layer: 5
   m_Name: Panel_LevelUp
   m_TagString: Untagged
@@ -2016,6 +2017,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674537725}
   m_CullTransparentMesh: 1
+--- !u!114 &1674537729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674537725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94110c92a37a467192774426ebc6dc9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeItemPrefab: {fileID: 1616571343021237322, guid: 35c0b3820f5e5334cb57934557fe4137,
+    type: 3}
+  upgradeContainer: {fileID: 45146810}
+  allSkills:
+  - {fileID: 11400000, guid: ef437da153f685a4780e61e30ec8e9b6, type: 2}
+  - {fileID: 11400000, guid: f16bec07fa7dceb45a5f6f00fe2bf076, type: 2}
+  - {fileID: 11400000, guid: 26f22b26b0a51b04da076a5bdba52b30, type: 2}
+  - {fileID: 11400000, guid: fe1095e75b2cd7c41ba1f1a643c027b2, type: 2}
+  - {fileID: 11400000, guid: c6bd5efc101a42a478ac5d83dca1a449, type: 2}
+  playerCombat: {fileID: 1643431065}
 --- !u!1 &1854215922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,15 +2360,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2036796230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94110c92a37a467192774426ebc6dc9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 806705b90f290db46a2de7414cfc9dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelLevelUpUI: {fileID: 1674537725}
-  upgradeSimplePrefab: {fileID: 1616571343021237322, guid: 35c0b3820f5e5334cb57934557fe4137,
-    type: 3}
-  upgradeContainer: {fileID: 45146810}
-  elementSkillDataList:
-  - {fileID: 11400000, guid: f16bec07fa7dceb45a5f6f00fe2bf076, type: 2}
+  panelLevelUpUI: {fileID: 1674537729}
 --- !u!1 &2092854154
 GameObject:
   m_ObjectHideFlags: 0

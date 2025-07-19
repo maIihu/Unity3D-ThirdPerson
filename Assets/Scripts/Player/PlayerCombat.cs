@@ -29,20 +29,25 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     private float _maxHealth;
     private float _damage;
     
+    private List<ElementSkillData> _skillOwnerList;
+    
     private void Start()
     {
+        _skillOwnerList  = new List<ElementSkillData>();
         _maxHealth = _health = data.health;
         _damage = data.damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
-
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(GameManager.Instance.CurrentState == GameState.Playing)
         {
-            anim.SetTrigger(PlayerString.AttackTrigger);
-            FireRaycast();
+            if (Input.GetMouseButtonDown(0))
+            {
+                anim.SetTrigger(PlayerString.AttackTrigger);
+                FireRaycast();
+            }
         }
     }
 
@@ -83,4 +88,28 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     public float CurrentHealth => _maxHealth;
     public float MaxHealth => _health;
     public event Action<float, float> OnHealthChanged;
+
+    public void AddSkill(ElementSkillData newSkill)
+    {
+        for (int i = 0; i < _skillOwnerList.Count; i++)
+        {
+            if (_skillOwnerList[i].element == newSkill.element)
+            {
+                if ((int)newSkill.skillLevel > (int)_skillOwnerList[i].skillLevel)
+                {
+                    _skillOwnerList[i] = newSkill;
+                }
+                return;
+            }
+        }
+
+        _skillOwnerList.Add(newSkill);
+    }
+
+
+    public List<ElementSkillData> GetSkillOwner()
+    {
+        return  _skillOwnerList; 
+    }
+
 }

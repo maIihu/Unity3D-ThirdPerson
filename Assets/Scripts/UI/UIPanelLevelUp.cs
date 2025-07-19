@@ -1,53 +1,104 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class UIPanelLevelUp : MonoBehaviour
 {
-    [SerializeField] private GameObject panelLevelUpUI;
-    
-    [SerializeField] private GameObject upgradeSimplePrefab;
-    [SerializeField] private Transform upgradeContainer;
-    
-    [SerializeField] private List<ElementSkillData> elementSkillDataList;
-    
-    private List<UIUpgradeItem> _upgradeItemList;
+    private const int UpgradeSlotCount = 3;
 
-    private void Start()
+    [Header("Upgrade Item")]
+    [SerializeField] private GameObject upgradeItemPrefab;
+    [SerializeField] private Transform upgradeContainer;
+
+    [Header("All Element Skills")]
+    [SerializeField] private List<ElementSkillData> allSkills;
+
+    [Header("Player")]
+    [SerializeField] private PlayerCombat playerCombat;
+
+    private List<UIUpgradeItem> _upgradeSlots;
+
+    private void Awake()
     {
-        _upgradeItemList = new List<UIUpgradeItem>();
-        panelLevelUpUI.SetActive(false);
-        SpawnUpgradeSimple();
+        _upgradeSlots = new List<UIUpgradeItem>();
+        CreateUpgradeSlots();
     }
-    
-    private void Update()
+
+    private void CreateUpgradeSlots()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        for (int i = 0; i < UpgradeSlotCount; i++)
         {
-            foreach (var item in _upgradeItemList)
+            GameObject item = Instantiate(upgradeItemPrefab, upgradeContainer);
+            if (item.TryGetComponent(out UIUpgradeItem upgradeItem))
             {
-                item.Setup(elementSkillDataList[0], OnUpgradeChosen);
+                _upgradeSlots.Add(upgradeItem);
             }
-            panelLevelUpUI.SetActive(true);
-            GameManager.Instance.ChangeState(GameState.LevelUp);
         }
     }
 
-    private void OnUpgradeChosen(ElementSkillData obj)
+    public void ShowUpgradeOptions()
     {
-        Debug.Log("Người chơi đã chọn: " + obj.name);
-        panelLevelUpUI.SetActive(false);
+        var options = GetUpgradeOptions();
+
+        for (int i = 0; i < _upgradeSlots.Count; i++)
+        {
+            if (i < options.Count)
+            {
+                _upgradeSlots[i].gameObject.SetActive(true);
+                _upgradeSlots[i].Setup(options[i], OnUpgradeSelected);
+            }
+            else
+            {
+                _upgradeSlots[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void OnUpgradeSelected(ElementSkillData selectedSkill)
+    {
+        Debug.Log("Người chơi đã chọn: " + selectedSkill.name);
+        playerCombat.AddSkill(selectedSkill);
+        gameObject.SetActive(false);
         GameManager.Instance.ChangeState(GameState.Playing);
     }
 
-    private void SpawnUpgradeSimple()
+    private List<ElementSkillData> GetUpgradeOptions()
     {
-        for (int i = 0; i < 3; i++)
+        List<ElementSkillData> playerSkills = playerCombat.GetSkillOwner();
+
+        if (playerSkills.Count == 0)
         {
-            GameObject item = Instantiate(upgradeSimplePrefab, upgradeContainer);
-            item.TryGetComponent(out UIUpgradeItem upgradeItem);
-            _upgradeItemList.Add(upgradeItem);
+            return GetRandomBaseSkillsExcluding(null, UpgradeSlotCount);
         }
+
+        if (playerSkills.Count == 1)
+        {
+            return GetRandomBaseSkillsExcluding(playerSkills[0].element, UpgradeSlotCount);
+        }
+
+        return GetRandomUpgradeFromCurrent(playerSkills);
+    }
+
+
+    private List<ElementSkillData> GetRandomBaseSkillsExcluding(ElementType? excludedElement, int count)
+    {
+        return allSkills
+            .Where(skill => skill.skillLevel == SkillLevel.Base && (excludedElement == null || skill.element != excludedElement))
+            .OrderBy(_ => Random.value)
+            .Take(count)
+            .ToList();
+    }
+
+    private List<ElementSkillData> GetRandomUpgradeFromCurrent(List<ElementSkillData> currentSkills)
+    {
+        var upgradeable = currentSkills
+            .Where(skill => skill.nextLevelSkill)
+            .Select(skill => skill.nextLevelSkill)
+            .ToList();
+
+        if (upgradeable.Count == 0) return new List<ElementSkillData>();
+
+        return new List<ElementSkillData> { upgradeable[Random.Range(0, upgradeable.Count)] };
     }
 }

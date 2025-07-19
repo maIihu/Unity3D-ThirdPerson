@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance{get{return _instance;}}
     
-    private GameState _gameState;
+    public GameState CurrentState { get; private set; }
 
     private void Awake()
     {
@@ -30,28 +30,32 @@ public class GameManager : MonoBehaviour
 
     private void InitializeState()
     {
-        _gameState = GameState.Playing;
+        CurrentState = GameState.Playing;
         EnterState();
     }
 
     public void ChangeState(GameState newState)
     {
-        _gameState = newState;
+        CurrentState = newState;
         EnterState();
     }
 
     private void EnterState()
     {
-        switch (_gameState)
+        switch (CurrentState)
         {
             case GameState.Pause:
                 Time.timeScale = 0;
                 break;
             case GameState.LevelUp:
                 Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 break;
             case GameState.Playing:
                 Time.timeScale = 1;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 break;
         }
     }

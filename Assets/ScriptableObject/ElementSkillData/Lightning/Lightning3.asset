@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3396644e5453fbb4e8057c404fd1c714, type: 3}
-  m_Name: Fire
+  m_Name: Lightning3
   m_EditorClassIdentifier: 
-  skillName: Fire
-  description: Fire fire fire
-  element: 0
-  tier: 0
+  skillName: Lightning
+  description: Lightning 2
+  element: 4
+  skillLevel: 2
   icon: {fileID: 21300000, guid: 94a415d824c9d3d49b9be97f94574962, type: 3}
   effectPrefab: {fileID: 0}
+  nextLevelSkill: {fileID: 0}
