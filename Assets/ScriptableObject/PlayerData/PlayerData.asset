@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 20
+  exp: 10
+  level: 1
+  moveSpeed: 5
+  jumpForce: 6
+  interactDistance: 2

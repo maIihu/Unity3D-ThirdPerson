@@ -76,7 +76,6 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         
         bullet.TryGetComponent(out BulletProjectile bulletProjectile);
         bulletProjectile.Launch(shootTargetPoint);
-
     }
     
     public void TakeDamage(float damage)
