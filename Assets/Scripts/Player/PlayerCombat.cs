@@ -15,14 +15,14 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     [SerializeField] private Transform spawnBulletPoint;
     [SerializeField] private float attackRaycastDistance;
     
-    [Header("Data")]
-    [SerializeField] private PlayerData data;
+    [Header("Data")] [SerializeField] private PlayerData data;
     
-    [Header("Animation")]
-    [SerializeField] private Animator anim;
+    [Header("Animation")] [SerializeField] private Animator anim;
     
-    [Header("Camera")]
-    [SerializeField] private Transform fpsCamera;
+    [Header("Camera")] [SerializeField] private Transform fpsCamera;
+
+    [Header("Effect")] 
+    [SerializeField] private ParticleSystem muzzleEffect;
     
     private Vector3 _mouseWorldPos;
     private float _health;
@@ -54,11 +54,13 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     private void FireRaycast()
     {
         Vector3 shootTargetPoint;
+        muzzleEffect.Play();
         if (Physics.Raycast(fpsCamera.position, fpsCamera.forward, out var hit, attackRaycastDistance))
         {
             //Debug.Log(hit.collider.gameObject.name);
             // Debug.DrawRay(spawnBulletPoint.position, fpsCamera.forward * hit.distance, Color.red, 10);
             shootTargetPoint = hit.point;
+            
             if (hit.collider.TryGetComponent(out IAttackable attackable))
             {
                 attackable.TakeDamage(_damage);
@@ -76,6 +78,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         
         bullet.TryGetComponent(out BulletProjectile bulletProjectile);
         bulletProjectile.Launch(shootTargetPoint);
+
     }
     
     public void TakeDamage(float damage)

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
+    [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private float speed;
 
     private Vector3 _targetPos;
@@ -24,7 +25,9 @@ public class BulletProjectile : MonoBehaviour
             if (Vector3.Distance(transform.position, _targetPos) < 0.1f)
             {
                 BulletObjectPool.Instance.ReturnBulletObject(gameObject);
+                GameObject hitEffect = Instantiate(hitEffectPrefab, _targetPos, Quaternion.LookRotation(Vector3.forward));
                 _isFlying = false;
+                Destroy(hitEffect, 1f);
             }
         }
     }
