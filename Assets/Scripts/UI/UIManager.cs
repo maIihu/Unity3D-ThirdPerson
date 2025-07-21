@@ -11,7 +11,15 @@ public class UIManager : MonoBehaviour
     {
         panelLevelUpUI.gameObject.SetActive(false);
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            PlayerLevelUp();
+        }
+    }
+
     public void PlayerLevelUp()
     {
         panelLevelUpUI.ShowUpgradeOptions();

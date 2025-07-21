@@ -10,7 +10,7 @@ public static class PlayerString
 
 public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
 {
-    [Header("Fire")]
+    [Header("Fire Bullet")]
     [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private Transform spawnBulletPoint;
     [SerializeField] private float attackRaycastDistance;
@@ -24,12 +24,18 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     [Header("Effect")] 
     [SerializeField] private ParticleSystem muzzleEffect;
     
+    [Header("Skill")]
+    [SerializeField] private GameObject skillPrefab;
+    
     private Vector3 _mouseWorldPos;
     private float _health;
     private float _maxHealth;
     private float _damage;
     
     private List<ElementSkillData> _skillOwnerList;
+    private ElementSkillData _skill1;
+    private ElementSkillData _skill2;
+    private ElementSkillData _ultimateSkill;
     
     private void Start()
     {
@@ -48,7 +54,30 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
                 anim.SetTrigger(PlayerString.AttackTrigger);
                 FireRaycast();
             }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (_skill1)
+                {
+                    Debug.Log("Skill 1 Active");
+                    GameObject skill = Instantiate(_skill1.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+                    skill.TryGetComponent(out ElementSkillBase skillBase);
+                    skillBase.Setup(_skill1.moveSpeed, _skill1.timeLife, _skill1.damage);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (_skill2)
+                {
+                    Debug.Log("Skill 2 Active");
+                    GameObject skill = Instantiate(_skill2.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+                    skill.TryGetComponent(out ElementSkillBase skillBase);
+                    skillBase.Setup(_skill2.moveSpeed, _skill2.timeLife, _skill2.damage);
+                }
+            }
         }
+        
     }
 
     private void FireRaycast()
@@ -106,8 +135,16 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         }
 
         _skillOwnerList.Add(newSkill);
+        switch (_skillOwnerList.Count)
+        {
+            case 1:
+                _skill1 = _skillOwnerList[0];
+                break;
+            case 2:
+                _skill2 = _skillOwnerList[1];
+                break;
+        }
     }
-
 
     public List<ElementSkillData> GetSkillOwner()
     {

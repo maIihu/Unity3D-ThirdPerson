@@ -26,7 +26,7 @@ public class UIUpgradeItem : MonoBehaviour
         
         textName.text = skillData.name;
         imageIcon.sprite = skillData.icon;
-        textDescription.text = skillData.description;
+        textDescription.text = skillData.Description;
         
         selectButton.onClick.RemoveAllListeners();
         selectButton.onClick.AddListener(OnClick);

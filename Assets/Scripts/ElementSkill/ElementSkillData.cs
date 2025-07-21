@@ -8,12 +8,17 @@ public enum SkillLevel {Base, Upgrade1, Upgrade2}
 [CreateAssetMenu()]
 public class ElementSkillData : ScriptableObject
 {
-    public string skillName;
-    public string description;
+    public string SkillName;
+    public string Description;
     public ElementType element;
     public SkillLevel skillLevel;
     public Sprite icon;
-    public GameObject effectPrefab;
+    public GameObject skillPrefab;
+    public float amount;
+    public float timeLife;
+    public float countDownTimer;
+    public float moveSpeed;
+    public float damage;
 
     public ElementSkillData nextLevelSkill;
 }
