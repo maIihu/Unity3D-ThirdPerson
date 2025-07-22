@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private BulletObjectPool bulletObjectPool;
+    //[SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private Transform spawnBulletPoint;
 
     [SerializeField] private EnemyData data;
@@ -71,14 +71,14 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 
     private void FireBullet()
     {
-        Debug.DrawRay(transform.position, transform.forward * 20f, Color.red, 10f);
-        if (Physics.Raycast(transform.position, transform.forward, out var hit, 20f))
-        {
-            if (hit.collider.TryGetComponent(out IAttackable attackable))
-            {
-                attackable.TakeDamage(10f);
-            }
-        }
+        Instantiate(bulletPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+        // var bullet = bulletObjectPool.GetBulletObject();
+        // bullet.transform.position = spawnBulletPoint.position;
+        // bullet.transform.rotation = Quaternion.identity;
+        // bullet.TryGetComponent(out BulletProjectile bulletProjectile);
+        //
+        // Vector3 shootDir = (_targetPlayer.position - spawnBulletPoint.position).normalized;
+        // bulletProjectile.SetupBullet(shootDir, 10f);
     }
 
 

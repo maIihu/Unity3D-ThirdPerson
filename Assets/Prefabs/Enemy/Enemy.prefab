@@ -100,7 +100,7 @@ Transform:
   m_GameObject: {fileID: 1320636403114411049}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.131, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -236,7 +236,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 1.8
   m_BaseOffset: 0.85
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 2
@@ -252,12 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9827e06a42281d34e9c6ecac256b9d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPlayer: {fileID: 7163170747050431257, guid: 8fd717350f863214183e9638679d6106,
-    type: 3}
   bulletPrefab: {fileID: 721396554780780892, guid: 7427ae389bdc4de41ac48e92b5609d0e,
     type: 3}
-  bulletObjectPool: {fileID: 3512046831380035151, guid: c28162ae1bd571a4c9b908280e46301a,
-    type: 3}
+  bulletObjectPool: {fileID: 0}
   spawnBulletPoint: {fileID: 2966702733021746743}
   data: {fileID: 11400000, guid: 8b8668cf2d54e8a42a995eb67c5da524, type: 2}
   expPrefab: {fileID: 721396554780780892, guid: 550e19da909afa24a8cc694c205e3950,

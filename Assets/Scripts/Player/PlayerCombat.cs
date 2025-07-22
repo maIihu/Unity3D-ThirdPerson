@@ -14,6 +14,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private Transform spawnBulletPoint;
     [SerializeField] private float attackRaycastDistance;
+    [SerializeField] private Transform mid;
     
     [Header("Data")] [SerializeField] private PlayerData data;
     
@@ -82,29 +83,30 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     {
         Vector3 shootTargetPoint;
         muzzleEffect.Play();
-        if (Physics.Raycast(fpsCamera.position, fpsCamera.forward, out var hit, attackRaycastDistance))
-        {
-            //Debug.Log(hit.collider.gameObject.name);
-            // Debug.DrawRay(spawnBulletPoint.position, fpsCamera.forward * hit.distance, Color.red, 10);
-            shootTargetPoint = hit.point;
-            
-            if (hit.collider.TryGetComponent(out IAttackable attackable))
-            {
-                attackable.TakeDamage(_damage);
-            }
-        }
-        else
-        {
-            shootTargetPoint = fpsCamera.position + fpsCamera.forward * attackRaycastDistance;
-        }
-        Vector3 bulletDir = (shootTargetPoint  - spawnBulletPoint.position).normalized;
+         if (Physics.Raycast(fpsCamera.position, fpsCamera.forward, out var hit, attackRaycastDistance))
+         {
+             //Debug.Log(hit.collider.gameObject.name);
+             // Debug.DrawRay(spawnBulletPoint.position, fpsCamera.forward * hit.distance, Color.red, 10);
+             shootTargetPoint = hit.point;
+             
+             // if (hit.collider.TryGetComponent(out IAttackable attackable))
+             // {
+             //     attackable.TakeDamage(_damage);
+             // }
+         }
+         else
+         {
+             shootTargetPoint = fpsCamera.position + fpsCamera.forward * attackRaycastDistance;
+         }
+
+         Vector3 bulletDir = (shootTargetPoint - spawnBulletPoint.position).normalized;
         
         var bullet = bulletObjectPool.GetBulletObject();
         bullet.transform.position = spawnBulletPoint.position;
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
         bullet.TryGetComponent(out BulletProjectile bulletProjectile);
-        bulletProjectile.Launch(shootTargetPoint);
+        bulletProjectile.SetupBullet(bulletDir, _damage);
 
     }
     

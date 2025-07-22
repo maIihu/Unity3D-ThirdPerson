@@ -8,12 +8,15 @@ public class BulletProjectile : MonoBehaviour
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private float speed;
 
-    private Vector3 _targetPos;
+    private Vector3 _direction;
     private bool _isFlying;
+
+    private float _damage;
     
-    public void Launch(Vector3 targetPos)
+    public void SetupBullet(Vector3 direction, float damage)
     {
-        _targetPos = targetPos;
+        _direction = direction;
+        _damage = damage;
         _isFlying = true;
     }
 
@@ -21,15 +24,20 @@ public class BulletProjectile : MonoBehaviour
     {
         if (_isFlying)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPos, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, _targetPos) < 0.1f)
-            {
-                BulletObjectPool.Instance.ReturnBulletObject(gameObject);
-                GameObject hitEffect = Instantiate(hitEffectPrefab, _targetPos, Quaternion.LookRotation(Vector3.forward));
-                _isFlying = false;
-                Destroy(hitEffect, 1f);
-            }
+            transform.position += _direction * (speed * Time.deltaTime);
         }
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out IAttackable target))
+        {
+            target.TakeDamage(10f);
+        }
+        BulletObjectPool.Instance.ReturnBulletObject(gameObject);
+        GameObject hitEffect = Instantiate(hitEffectPrefab, other.transform.position, Quaternion.identity);
+        _isFlying = false;
+        Destroy(hitEffect, 1f);
     }
 
     private void OnDisable()
