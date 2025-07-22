@@ -1064,20 +1064,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1456699817517798793, guid: c89cc5a4beaeddf428cb963f1e979d5c,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2273747801831301958, guid: c89cc5a4beaeddf428cb963f1e979d5c,
         type: 3}
       propertyPath: m_Name
       value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 2273747801831301958, guid: c89cc5a4beaeddf428cb963f1e979d5c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3582714146732647350, guid: c89cc5a4beaeddf428cb963f1e979d5c,
         type: 3}
@@ -1129,17 +1119,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8269295123894018156, guid: c89cc5a4beaeddf428cb963f1e979d5c,
-        type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 7434449366790823151, guid: c4c6677fb35b76b40a7bca34252501ce,
-        type: 3}
-    - target: {fileID: 8269295123894018156, guid: c89cc5a4beaeddf428cb963f1e979d5c,
-        type: 3}
-      propertyPath: bulletObjectPool
-      value: 
-      objectReference: {fileID: 3823242243397758760}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
