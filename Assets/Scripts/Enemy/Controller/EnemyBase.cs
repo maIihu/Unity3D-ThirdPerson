@@ -6,13 +6,15 @@ using UnityEngine.AI;
 
 public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
-    [SerializeField] private Transform targetPlayer;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private Transform spawnBulletPoint;
 
     [SerializeField] private EnemyData data;
+
+    [SerializeField] private GameObject expPrefab;
     
+    private Transform _targetPlayer;
     private float _lastAttackTime;
     private float _health;
     private float _maxHealth;
@@ -26,6 +28,7 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 
     private void Start()
     {
+        _targetPlayer = GameManager.Instance.GetPlayerTransform();
         _maxHealth = _health = data.health;
         OnHealthChanged?.Invoke(_health, _maxHealth);
     }
@@ -34,8 +37,8 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     {
         if (DistanceToPlayer() > data.attackRange)
         {
-            Debug.DrawLine(targetPlayer.position, targetPlayer.position + Vector3.right, Color.red);
-            _agent.SetDestination(targetPlayer.position);
+            Debug.DrawLine(_targetPlayer.position, _targetPlayer.position + Vector3.right, Color.red);
+            _agent.SetDestination(_targetPlayer.position);
         }
         else
         {
@@ -45,13 +48,13 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 
     private float DistanceToPlayer()
     {
-        return Vector3.Distance(this.transform.position, targetPlayer.transform.position);
+        return Vector3.Distance(this.transform.position, _targetPlayer.transform.position);
     }
     
     private void Update()
     {
         ChaseToPlayerTarget();
-        //Attack();
+        Attack();
     }
    
     private void Attack()
@@ -68,7 +71,14 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 
     private void FireBullet()
     {
-        
+        Debug.DrawRay(transform.position, transform.forward * 20f, Color.red, 10f);
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, 20f))
+        {
+            if (hit.collider.TryGetComponent(out IAttackable attackable))
+            {
+                attackable.TakeDamage(10f);
+            }
+        }
     }
 
 
@@ -77,7 +87,10 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
         _health -= damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
         if(_health <= 0)
+        {
+            Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+        }
     }
 
     public float CurrentHealth => _maxHealth;

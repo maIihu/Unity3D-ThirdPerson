@@ -22,6 +22,6 @@ MonoBehaviour:
   amount: 1
   timeLife: 2
   countDownTimer: 2
-  moveSpeed: 20
+  moveSpeed: 0
   damage: 0
   nextLevelSkill: {fileID: 11400000, guid: b075706ef8fca634f905384e05f1b52c, type: 2}

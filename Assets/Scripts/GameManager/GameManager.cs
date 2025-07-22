@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     public static GameManager Instance{get{return _instance;}}
-    
+
+    [SerializeField] private Transform playerTransform;
     public GameState CurrentState { get; private set; }
 
     private void Awake()
@@ -58,5 +59,10 @@ public class GameManager : MonoBehaviour
                 Cursor.visible = false;
                 break;
         }
+    }
+
+    public Transform GetPlayerTransform()
+    {
+        return playerTransform;
     }
 }

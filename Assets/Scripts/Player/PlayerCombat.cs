@@ -59,7 +59,6 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
             {
                 if (_skill1)
                 {
-                    Debug.Log("Skill 1 Active");
                     GameObject skill = Instantiate(_skill1.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
                     skill.TryGetComponent(out ElementSkillBase skillBase);
                     skillBase.Setup(_skill1.moveSpeed, _skill1.timeLife, _skill1.damage);
@@ -70,7 +69,6 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
             {
                 if (_skill2)
                 {
-                    Debug.Log("Skill 2 Active");
                     GameObject skill = Instantiate(_skill2.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
                     skill.TryGetComponent(out ElementSkillBase skillBase);
                     skillBase.Setup(_skill2.moveSpeed, _skill2.timeLife, _skill2.damage);
