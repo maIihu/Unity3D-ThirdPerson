@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private Transform spawnBulletPoint;
 
     [SerializeField] private EnemyData data;
@@ -21,12 +19,14 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     
     private NavMeshAgent _agent;
     
+    public BulletObjectPool bulletObjectPool;
+    
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         _targetPlayer = GameManager.Instance.GetPlayerTransform();
         _maxHealth = _health = data.health;
@@ -97,7 +97,7 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
         if(_health <= 0)
         {
             Instantiate(expPrefab, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
+            EnemyObjectPool.Instance.ReturnEnemyObject(this.gameObject);
         }
     }
 

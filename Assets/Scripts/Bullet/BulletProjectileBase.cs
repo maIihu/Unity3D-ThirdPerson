@@ -18,6 +18,8 @@ public class BulletProjectileBase : MonoBehaviour
     private BulletOwner _bulletOwner;
     private BulletObjectPool _bulletObjectPool;
     
+    private Coroutine _lifeTimerCoroutine;
+    
     public void SetupBullet(Vector3 direction, float damage, float speed, BulletOwner bulletOwner, BulletObjectPool bulletObjectPool)
     {
         this._direction = direction;
@@ -26,6 +28,17 @@ public class BulletProjectileBase : MonoBehaviour
         _isFlying = true;
         _bulletOwner = bulletOwner;
         _bulletObjectPool = bulletObjectPool;
+        _lifeTimerCoroutine = StartCoroutine(BulletLifeTimer(3f));
+    }
+
+    private IEnumerator BulletLifeTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (_isFlying)
+        {
+            _isFlying = false;
+            _bulletObjectPool.ReturnBulletObject(gameObject);
+        }
     }
     
     private void Update()
@@ -38,9 +51,15 @@ public class BulletProjectileBase : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IAttackable target) && target.BulletOwner != _bulletOwner)
+        // if (other.GetComponent<BulletProjectileBase>() != null)
+        //     return;
+        //
+        if (other.TryGetComponent(out IAttackable target))
         {
-            target.TakeDamage(_damage);
+            if (target.BulletOwner != _bulletOwner)
+                target.TakeDamage(_damage);
+            else
+                return;
         }
         _bulletObjectPool.ReturnBulletObject(gameObject);
         _isFlying = false;
@@ -50,6 +69,8 @@ public class BulletProjectileBase : MonoBehaviour
             Destroy(hitEffect, 1f);
         }
         
+        if (_lifeTimerCoroutine != null)
+            StopCoroutine(_lifeTimerCoroutine);
     }
 
     private void OnDisable()

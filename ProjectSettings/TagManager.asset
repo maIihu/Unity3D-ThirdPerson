@@ -17,10 +17,10 @@ TagManager:
   - 
   - Ground
   - Interact
-  - 
-  - 
-  - 
-  - 
+  - Projectile
+  - ExpBall
+  - Player
+  - Enemy
   - 
   - 
   - 

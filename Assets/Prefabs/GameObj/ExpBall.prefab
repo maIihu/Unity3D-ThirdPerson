@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1625389232190703970}
   - component: {fileID: 6971885444426441395}
   - component: {fileID: 5673959031314039882}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ExpBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,3 +120,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exp: 2
   speed: 4
+  hoverHeight: 0.3
+  hoverDuration: 0.3

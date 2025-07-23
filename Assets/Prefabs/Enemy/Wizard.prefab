@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5899559415336101985}
   - component: {fileID: 3326103763884635703}
   - component: {fileID: 2201123285029793319}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2966702733021746743}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ Transform:
   m_GameObject: {fileID: 1320636403114411049}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0.18}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4210047746895871965}
   - component: {fileID: 749258222487875061}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,12 +168,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3582714146732647350}
+  - component: {fileID: 2328191191918892482}
   - component: {fileID: 4100363062286383666}
   - component: {fileID: 8269295123894018156}
   - component: {fileID: 1456699817517798793}
-  - component: {fileID: 2328191191918892482}
-  m_Layer: 0
-  m_Name: Enemy
+  m_Layer: 14
+  m_Name: Wizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,58 +197,6 @@ Transform:
   - {fileID: 7503099752846033884}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &4100363062286383666
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2273747801831301958}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.8
-  m_BaseOffset: 0.85
-  m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 2
---- !u!114 &8269295123894018156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2273747801831301958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9827e06a42281d34e9c6ecac256b9d27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 7434449366790823151, guid: c4c6677fb35b76b40a7bca34252501ce,
-    type: 3}
-  spawnBulletPoint: {fileID: 2966702733021746743}
-  data: {fileID: 11400000, guid: 8b8668cf2d54e8a42a995eb67c5da524, type: 2}
-  expPrefab: {fileID: 721396554780780892, guid: 550e19da909afa24a8cc694c205e3950,
-    type: 3}
---- !u!114 &1456699817517798793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2273747801831301958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54343adb4f1f28468e81b6bf756a2e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &2328191191918892482
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -268,10 +216,61 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.4
+  m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &4100363062286383666
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2273747801831301958}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.4
+  m_Speed: 4
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.6
+  m_WalkableMask: 1
+  m_ObstacleAvoidanceType: 2
+--- !u!114 &8269295123894018156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2273747801831301958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9827e06a42281d34e9c6ecac256b9d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnBulletPoint: {fileID: 2966702733021746743}
+  data: {fileID: 11400000, guid: 8b8668cf2d54e8a42a995eb67c5da524, type: 2}
+  expPrefab: {fileID: 721396554780780892, guid: 550e19da909afa24a8cc694c205e3950,
+    type: 3}
+  bulletObjectPool: {fileID: 0}
+--- !u!114 &1456699817517798793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2273747801831301958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54343adb4f1f28468e81b6bf756a2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6685522965080778070
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +282,7 @@ GameObject:
   - component: {fileID: 6826980979788724577}
   - component: {fileID: 6772449864678337593}
   - component: {fileID: 4008729375415207172}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +357,7 @@ GameObject:
   - component: {fileID: 3550965248725029452}
   - component: {fileID: 1804790460910846713}
   - component: {fileID: 2400454124218734426}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +434,7 @@ GameObject:
   - component: {fileID: 2175107732072636159}
   - component: {fileID: 4044037974038343465}
   - component: {fileID: 5099873607535121492}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7503099752846033884}
   - component: {fileID: 2839094619469488895}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -610,7 +609,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 11a1d1a5d9e3ee84bb9bc21c9c180d3d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13bd40cf6c8eed648b9bd96e8d80dd21, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

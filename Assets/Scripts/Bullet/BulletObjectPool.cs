@@ -2,31 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BulletObjectPool : MonoBehaviour
 {
-    // private static BulletObjectPool _instance;
-    // public static BulletObjectPool Instance { get { return _instance; } }
-    
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject[] bulletPrefab;
     [SerializeField] private int bulletPoolSize;
     
     private List<GameObject> _bulletPool;
-
-    private void Awake()
-    {
-        // if(_instance != null &&  _instance != this)
-        //     Destroy(this.gameObject);
-        // else 
-        //     _instance = this;
-    }
+    
 
     private void Start()
     {
         _bulletPool = new List<GameObject>();
         for (int i = 0; i < bulletPoolSize; i++)
         {
-            GameObject bulletObj = Instantiate(bulletPrefab, this.transform);
+            int indexRandom = Random.Range(0, bulletPrefab.Length);
+            GameObject bulletObj = Instantiate(bulletPrefab[indexRandom], this.transform);
             bulletObj.SetActive(false);
             _bulletPool.Add(bulletObj);
         }
@@ -42,7 +34,8 @@ public class BulletObjectPool : MonoBehaviour
                 return bulletObj;
             }
         }
-        GameObject newBulletObj = Instantiate(bulletPrefab, this.transform);
+        int indexRandom = Random.Range(0, bulletPrefab.Length);
+        GameObject newBulletObj = Instantiate(bulletPrefab[indexRandom], this.transform);
         _bulletPool.Add(newBulletObj);
         return newBulletObj;
     }
