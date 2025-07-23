@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
     [SerializeField] private GameObject bulletPrefab;
-    //[SerializeField] private BulletObjectPool bulletObjectPool;
+    [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private Transform spawnBulletPoint;
 
     [SerializeField] private EnemyData data;
@@ -71,7 +71,7 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 
     private void FireBullet()
     {
-        Instantiate(bulletPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+        //Instantiate(bulletPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
         // var bullet = bulletObjectPool.GetBulletObject();
         // bullet.transform.position = spawnBulletPoint.position;
         // bullet.transform.rotation = Quaternion.identity;
@@ -79,6 +79,14 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
         //
         // Vector3 shootDir = (_targetPlayer.position - spawnBulletPoint.position).normalized;
         // bulletProjectile.SetupBullet(shootDir, 10f);
+        
+        var bulletDir = transform.forward;
+        var bullet = bulletObjectPool.GetBulletObject();
+        bullet.transform.position = spawnBulletPoint.position;
+        bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
+        
+        bullet.TryGetComponent(out BulletProjectileBase bulletProjectile);
+        bulletProjectile.SetupBullet(bulletDir, data.damage, 10f, BulletOwner.Enemy, bulletObjectPool);
     }
 
 
@@ -91,6 +99,10 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
             Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
+    }
+
+    public BulletOwner BulletOwner { get=> BulletOwner.Enemy;
+        set {  }
     }
 
     public float CurrentHealth => _maxHealth;

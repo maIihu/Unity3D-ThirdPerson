@@ -105,8 +105,8 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         bullet.transform.position = spawnBulletPoint.position;
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
-        bullet.TryGetComponent(out BulletProjectile bulletProjectile);
-        bulletProjectile.SetupBullet(bulletDir, _damage);
+        bullet.TryGetComponent(out BulletProjectileBase bulletProjectile);
+        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, BulletOwner.Player, bulletObjectPool);
 
     }
     
@@ -115,6 +115,8 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         _health -= damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
     }
+
+    public BulletOwner BulletOwner { get=>BulletOwner.Player; set{} }
 
     public float CurrentHealth => _maxHealth;
     public float MaxHealth => _health;

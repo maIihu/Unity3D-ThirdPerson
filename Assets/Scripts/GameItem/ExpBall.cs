@@ -20,7 +20,7 @@ public class ExpBall : MonoBehaviour, IInteractable
 
     private IEnumerator HoverEffect()
     {
-        Vector3 originalPos = transform.position;
+        Vector3 originalPos = new Vector3(transform.position.x, transform.position.y - hoverHeight, transform.position.z);
         Vector3 hoverPos = originalPos + Vector3.up * hoverHeight;
 
         float timer = 0;

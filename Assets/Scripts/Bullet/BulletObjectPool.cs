@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class BulletObjectPool : MonoBehaviour
 {
-    private static BulletObjectPool _instance;
-    public static BulletObjectPool Instance { get { return _instance; } }
+    // private static BulletObjectPool _instance;
+    // public static BulletObjectPool Instance { get { return _instance; } }
     
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private int bulletPoolSize;
@@ -15,10 +15,10 @@ public class BulletObjectPool : MonoBehaviour
 
     private void Awake()
     {
-        if(_instance != null &&  _instance != this)
-            Destroy(this.gameObject);
-        else 
-            _instance = this;
+        // if(_instance != null &&  _instance != this)
+        //     Destroy(this.gameObject);
+        // else 
+        //     _instance = this;
     }
 
     private void Start()

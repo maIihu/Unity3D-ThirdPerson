@@ -4,4 +4,5 @@ using UnityEngine;
 public interface IAttackable
 {
     public void TakeDamage(float damage);
+    public BulletOwner BulletOwner { get; set; }
 }
