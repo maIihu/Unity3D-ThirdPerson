@@ -7,9 +7,7 @@ using UnityEngine.AI;
 public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
     [SerializeField] private Transform spawnBulletPoint;
-
     [SerializeField] private EnemyData data;
-
     [SerializeField] private GameObject expPrefab;
     
     private Transform _targetPlayer;
@@ -94,6 +92,7 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     {
         _health -= damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
+        OnVisualChanged?.Invoke(true);
         if(_health <= 0)
         {
             Instantiate(expPrefab, transform.position, Quaternion.identity);
@@ -108,4 +107,5 @@ public class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     public float CurrentHealth => _maxHealth;
     public float MaxHealth => _health;
     public event Action<float, float> OnHealthChanged;
+    public event Action<bool> OnVisualChanged;
 }
