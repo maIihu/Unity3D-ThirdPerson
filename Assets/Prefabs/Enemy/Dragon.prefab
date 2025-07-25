@@ -152,13 +152,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600090048823873460}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60d22a7a50fb57846b9ea85f5cf6657c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 4008729375415207172}
-  healthSourceRaw: {fileID: 0}
+  healthSourceRaw: {fileID: 7450582045195056218}
 --- !u!1 &2273747801831301958
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3582714146732647350}
+  - component: {fileID: 7450582045195056218}
   - component: {fileID: 1456699817517798793}
   - component: {fileID: 5733229294802608505}
   m_Layer: 14
@@ -186,7 +187,7 @@ Transform:
   m_GameObject: {fileID: 2273747801831301958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.23624384, y: 1.27, z: 3.113}
+  m_LocalPosition: {x: 0.23624384, y: 10, z: 3.113}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -195,6 +196,23 @@ Transform:
   - {fileID: 7503099752846033884}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7450582045195056218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2273747801831301958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a2954612964bf9ae0b0b9d6d888ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnBulletPoint: {fileID: 2966702733021746743}
+  data: {fileID: 11400000, guid: 8b8668cf2d54e8a42a995eb67c5da524, type: 2}
+  expPrefab: {fileID: 721396554780780892, guid: 550e19da909afa24a8cc694c205e3950,
+    type: 3}
+  bulletObjectPool: {fileID: 0}
 --- !u!114 &1456699817517798793
 MonoBehaviour:
   m_ObjectHideFlags: 0
