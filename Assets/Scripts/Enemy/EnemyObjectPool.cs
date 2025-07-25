@@ -12,7 +12,6 @@ public class EnemyObjectPool : MonoBehaviour
     
     private List<GameObject> _enemyPool;
     
-    
     private void Awake()
     {
         if(_instance != null &&  _instance != this)

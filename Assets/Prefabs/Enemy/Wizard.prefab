@@ -190,12 +190,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3582714146732647350}
+  - component: {fileID: 7639926768049357484}
   - component: {fileID: 2328191191918892482}
   - component: {fileID: 4100363062286383666}
-  - component: {fileID: 8269295123894018156}
-  - component: {fileID: 9057127668179267508}
+  - component: {fileID: 5190652988562398631}
   - component: {fileID: 6775112652486639967}
-  - component: {fileID: 7639926768049357484}
+  - component: {fileID: 1992055218884392812}
   m_Layer: 14
   m_Name: Wizard
   m_TagString: Untagged
@@ -221,6 +221,27 @@ Transform:
   - {fileID: 7503099752846033884}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &7639926768049357484
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2273747801831301958}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ca9b62ba550c1a4fa463d5cb4dd8466, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!136 &2328191191918892482
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -266,7 +287,7 @@ NavMeshAgent:
   m_BaseOffset: 0.6
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 2
---- !u!114 &8269295123894018156
+--- !u!114 &5190652988562398631
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -275,7 +296,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2273747801831301958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9827e06a42281d34e9c6ecac256b9d27, type: 3}
+  m_Script: {fileID: 11500000, guid: 19b03095aff9407b99120dfcedd5655b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBulletPoint: {fileID: 2966702733021746743}
@@ -283,19 +304,6 @@ MonoBehaviour:
   expPrefab: {fileID: 721396554780780892, guid: 550e19da909afa24a8cc694c205e3950,
     type: 3}
   bulletObjectPool: {fileID: 0}
---- !u!114 &9057127668179267508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2273747801831301958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54529c346f9a4c1e8562122a0397d662, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damagePopup: {fileID: 8093269678692560542}
 --- !u!114 &6775112652486639967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,27 +316,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54343adb4f1f28468e81b6bf756a2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &7639926768049357484
-Animator:
-  serializedVersion: 5
+--- !u!114 &1992055218884392812
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2273747801831301958}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ca9b62ba550c1a4fa463d5cb4dd8466, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54529c346f9a4c1e8562122a0397d662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePopup: {fileID: 8093269678692560542}
 --- !u!1 &2316115313432695592
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 9033695657994824578}
-  healthSourceRaw: {fileID: 8269295123894018156}
+  healthSourceRaw: {fileID: 5190652988562398631}
 --- !u!1 &5990126665416419127
 GameObject:
   m_ObjectHideFlags: 0
