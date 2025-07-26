@@ -22,15 +22,18 @@ public class FlyingEnemy : EnemyBase
         Vector3 targetPosition = TargetPlayer.transform.position;
         targetPosition.y = this.transform.position.y;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, 1f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, 3f * Time.deltaTime);
     }
 
     protected override void Attack()
     {
         if (DistanceToPlayerXZ() <= data.attackRange)
         {
-            Debug.Log("Attack");
-            Instantiate(dragonBomb, spawnBulletPoint.position, Quaternion.identity);
+            if (Time.time - LastAttackTime >= data.attackCooldown)
+            {
+                Instantiate(dragonBomb, spawnBulletPoint.position, Quaternion.identity);
+                LastAttackTime = Time.time;
+            }
         }
     }
 
