@@ -10,8 +10,10 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     [SerializeField] protected EnemyData data;
     [SerializeField] protected GameObject expPrefab;
     
-    protected Transform _targetPlayer;
-    protected float _lastAttackTime;
+    protected Transform TargetPlayer;
+    protected float LastAttackTime;
+    protected EnemyType Type;
+    
     private float _health;
     private float _maxHealth;
     
@@ -19,14 +21,14 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     
     private void OnEnable()
     {
-        _targetPlayer = GameManager.Instance.GetPlayerTransform();
+        TargetPlayer = GameManager.Instance.GetPlayerTransform();
         _maxHealth = _health = data.health;
         OnHealthChanged?.Invoke(_health, _maxHealth);
     }
     
     protected float DistanceToPlayer()
     {
-        return Vector3.Distance(this.transform.position, _targetPlayer.transform.position);
+        return Vector3.Distance(this.transform.position, TargetPlayer.transform.position);
     }
     
     protected abstract void ChaseToPlayerTarget();
@@ -40,7 +42,7 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
         if(_health <= 0)
         {
             Instantiate(expPrefab, transform.position, Quaternion.identity);
-            EnemyObjectPool.Instance.ReturnEnemyObject(this.gameObject);
+            EnemyObjectPool.Instance.ReturnEnemyObject(this.Type, this.gameObject);
         }
     }
 

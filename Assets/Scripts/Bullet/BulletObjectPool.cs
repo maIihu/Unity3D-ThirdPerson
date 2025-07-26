@@ -11,7 +11,6 @@ public class BulletObjectPool : MonoBehaviour
     
     private List<GameObject> _bulletPool;
     
-
     private void Start()
     {
         _bulletPool = new List<GameObject>();

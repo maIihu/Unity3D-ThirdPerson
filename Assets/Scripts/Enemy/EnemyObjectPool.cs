@@ -1,16 +1,30 @@
 ﻿
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
+
+public enum EnemyType
+{
+    Flying, Ground
+}
 
 public class EnemyObjectPool : MonoBehaviour
 {
     private static EnemyObjectPool _instance;
     public static EnemyObjectPool Instance { get { return _instance; } }
+
+    [System.Serializable]
+    public class EnemyPoolInfo
+    {
+        public EnemyType poolType;
+        public GameObject prefab;
+        public int initialPoolSize = 30;
+    }
+
+    [SerializeField] private List<EnemyPoolInfo> enemyPools;
     
-    [SerializeField] private GameObject[] enemyPrefab;
-    [SerializeField] private int enemyPoolSize;
-    
-    private List<GameObject> _enemyPool;
+    private Dictionary<EnemyType, Queue<GameObject>> _poolQueue;
+    private Dictionary<EnemyType, List<GameObject>> _prefabListLookup;
     
     private void Awake()
     {
@@ -22,34 +36,57 @@ public class EnemyObjectPool : MonoBehaviour
     
     private void Start()
     {
-        _enemyPool = new List<GameObject>();
-        for (int i = 0; i < enemyPoolSize; i++)
-        {
-            int indexRandom = Random.Range(0, enemyPrefab.Length);
-            GameObject enemyObj = Instantiate(enemyPrefab[indexRandom], this.transform);
-            enemyObj.SetActive(false);
-            _enemyPool.Add(enemyObj);
-        }
+        _poolQueue = new Dictionary<EnemyType, Queue<GameObject>>();
+        _prefabListLookup = new Dictionary<EnemyType, List<GameObject>>();
+        
+        InitNewPool();
     }
 
-    public GameObject GetEnemyObject()
+    private void InitNewPool()
     {
-        foreach (GameObject enemyObj in _enemyPool)
+        foreach (var pool in enemyPools)
         {
-            if (!enemyObj.activeInHierarchy)
+            if (!_prefabListLookup.ContainsKey(pool.poolType))
             {
-                enemyObj.SetActive(true);
-                return enemyObj;
+                _prefabListLookup[pool.poolType] = new List<GameObject>();
+            }
+            _prefabListLookup[pool.poolType].Add(pool.prefab);
+            if (!_poolQueue.ContainsKey(pool.poolType))
+            {
+                _poolQueue[pool.poolType] = new Queue<GameObject>();
+            }
+            for (int i = 0; i < pool.initialPoolSize; i++)
+            {
+                GameObject obj = Instantiate(pool.prefab, this.transform);
+                obj.SetActive(false);
+                _poolQueue[pool.poolType].Enqueue(obj);
             }
         }
-        int indexRandom = Random.Range(0, enemyPrefab.Length);
-        GameObject newEnemyObj = Instantiate(enemyPrefab[indexRandom], this.transform);
-        _enemyPool.Add(newEnemyObj);
-        return newEnemyObj;
     }
 
-    public void ReturnEnemyObject(GameObject enemyObj)
+    public GameObject GetEnemyObject(EnemyType poolType)
+    {
+        if(!_poolQueue.ContainsKey(poolType)) return null;
+        GameObject obj;
+        if (_poolQueue[poolType].Count > 0)
+        {
+            obj = _poolQueue[poolType].Dequeue();
+        }
+        else
+        {
+            List<GameObject> prefabList = _prefabListLookup[poolType];
+            int randIndex = Random.Range(0, prefabList.Count);
+            GameObject randomPrefab = prefabList[randIndex];
+
+            obj = Instantiate(randomPrefab, transform);
+        }
+        obj.SetActive(true);
+        return obj;
+    }
+
+    public void ReturnEnemyObject(EnemyType poolType, GameObject enemyObj)
     {
         enemyObj.SetActive(false);
+        _poolQueue[poolType].Enqueue(enemyObj);
     }
 }

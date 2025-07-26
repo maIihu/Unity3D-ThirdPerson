@@ -11,6 +11,11 @@ public class GroundEnemy : EnemyBase
         _agent = GetComponent<NavMeshAgent>();
     }
 
+    private void Start()
+    {
+        this.Type = EnemyType.Ground;
+    }
+
     private void Update()
     {
         ChaseToPlayerTarget();
@@ -21,8 +26,8 @@ public class GroundEnemy : EnemyBase
     {
         if (DistanceToPlayer() > data.attackRange)
         {
-            Debug.DrawLine(_targetPlayer.position, _targetPlayer.position + Vector3.right, Color.red);
-            _agent.SetDestination(_targetPlayer.position);
+            Debug.DrawLine(TargetPlayer.position, TargetPlayer.position + Vector3.right, Color.red);
+            _agent.SetDestination(TargetPlayer.position);
         }
         else
         {
@@ -34,9 +39,9 @@ public class GroundEnemy : EnemyBase
     {
         if (DistanceToPlayer() <= data.attackRange)
         {
-            if (Time.time - _lastAttackTime >= data.attackCooldown)
+            if (Time.time - LastAttackTime >= data.attackCooldown)
             {
-                _lastAttackTime = Time.time;
+                LastAttackTime = Time.time;
                 FireBullet();
             }
         }
