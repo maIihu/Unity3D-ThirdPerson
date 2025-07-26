@@ -66,7 +66,7 @@ public class BulletProjectileBase : MonoBehaviour
         if (hitEffectPrefab != null)
         {
             GameObject hitEffect = Instantiate(hitEffectPrefab, other.transform.position, Quaternion.identity);
-            Destroy(hitEffect, 1f);
+            Destroy(hitEffect, 2f);
         }
         
         if (_lifeTimerCoroutine != null)

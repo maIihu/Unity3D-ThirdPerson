@@ -24,6 +24,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
 
     [Header("Effect")] 
     [SerializeField] private ParticleSystem muzzleEffect;
+    [SerializeField] private GameObject damageEffect;
     
     [Header("Skill")]
     [SerializeField] private GameObject skillPrefab;
@@ -38,12 +39,15 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     private ElementSkillData _skill2;
     private ElementSkillData _ultimateSkill;
     
+    private Coroutine _damageEffectCoroutine;
+    
     private void Start()
     {
         _skillOwnerList  = new List<ElementSkillData>();
         _maxHealth = _health = data.health;
         _damage = data.damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
+        damageEffect.SetActive(false);
     }
 
     private void Update()
@@ -114,6 +118,16 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     {
         _health -= damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
+        if(_damageEffectCoroutine == null)
+            _damageEffectCoroutine = StartCoroutine(ShowDamageEffect());
+    }
+
+    private IEnumerator ShowDamageEffect()
+    {
+        damageEffect.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        damageEffect.SetActive(false);
+        _damageEffectCoroutine = null;
     }
 
     public BulletOwner BulletOwner { get=>BulletOwner.Player; set{} }
