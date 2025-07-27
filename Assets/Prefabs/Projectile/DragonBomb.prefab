@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7743507031379998338}
   - component: {fileID: 2688146540900168506}
   - component: {fileID: 186614009265429061}
+  - component: {fileID: 384285723729148662}
   - component: {fileID: 3513387974729953278}
   - component: {fileID: 8026743320730431565}
-  - component: {fileID: 384285723729148662}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DragonBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,45 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3513387974729953278
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5203213829530453415}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8026743320730431565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5203213829530453415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a146e47de18ada4f98b7d3c241fd54d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fallSpeed: 5
-  explosionRadius: 3
-  damage: 30
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!54 &384285723729148662
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -152,3 +113,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &3513387974729953278
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5203213829530453415}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8026743320730431565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5203213829530453415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a146e47de18ada4f98b7d3c241fd54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallSpeed: 5
+  explosionRadius: 3
+  damage: 30
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  explodedEffect: {fileID: 6643893164395493088, guid: 29704c895b638324ca99d41279d364bf,
+    type: 3}

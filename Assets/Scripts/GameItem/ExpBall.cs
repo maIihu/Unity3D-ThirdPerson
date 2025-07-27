@@ -6,11 +6,12 @@ public class ExpBall : MonoBehaviour, IInteractable
     [SerializeField] private float exp;
     [SerializeField] private float speed;
     [SerializeField] private float hoverHeight = 0.3f; 
-    [SerializeField] private float hoverDuration = 0.3f; 
+    [SerializeField] private float hoverDuration = 0.3f;
+    [SerializeField] private float yPos = 0.2f;
 
     private PlayerMovement _playerTarget;
     private bool _isAttracting;
-    private bool _canAttract = false;
+    private bool _canAttract;
 
     private void OnEnable()
     {
@@ -20,7 +21,7 @@ public class ExpBall : MonoBehaviour, IInteractable
 
     private IEnumerator HoverEffect()
     {
-        Vector3 originalPos = new Vector3(transform.position.x, transform.position.y - hoverHeight, transform.position.z);
+        Vector3 originalPos = new Vector3(transform.position.x, yPos, transform.position.z);
         Vector3 hoverPos = originalPos + Vector3.up * hoverHeight;
 
         float timer = 0;

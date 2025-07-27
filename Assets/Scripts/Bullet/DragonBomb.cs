@@ -8,6 +8,7 @@ public class DragonBomb : MonoBehaviour
     [SerializeField] private float explosionRadius = 3f;
     [SerializeField] private float damage = 30f;
     [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private GameObject explodedEffect;
     
     private Rigidbody _rb;
 
@@ -20,7 +21,7 @@ public class DragonBomb : MonoBehaviour
     {
         _rb.MovePosition(transform.position + Vector3.down * (fallSpeed * Time.fixedDeltaTime));
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Exploded();
     }
@@ -28,6 +29,12 @@ public class DragonBomb : MonoBehaviour
     private void Exploded()
     {
         Debug.Log("Exploded");
+        if (explodedEffect != null)
+        {
+            GameObject effect = Instantiate(explodedEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 2f);
+        }
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, targetLayer);
 
         foreach (var hit in hitColliders)
