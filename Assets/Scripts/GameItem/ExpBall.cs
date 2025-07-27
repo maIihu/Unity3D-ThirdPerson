@@ -13,9 +13,10 @@ public class ExpBall : MonoBehaviour, IInteractable
     private bool _isAttracting;
     private bool _canAttract;
 
-    private void OnEnable()
+    public void InitAt(Vector3 setPos)
     {
         _canAttract = false;
+        transform.position = setPos;
         StartCoroutine(HoverEffect());
     }
 

@@ -8,7 +8,6 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
     [SerializeField] protected Transform spawnBulletPoint;
     [SerializeField] protected EnemyData data;
-    [SerializeField] protected GameObject expPrefab;
     
     protected Transform TargetPlayer;
     protected float LastAttackTime;
@@ -41,7 +40,10 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
         OnVisualChanged?.Invoke(true);
         if(_health <= 0)
         {
-            Instantiate(expPrefab, transform.position, Quaternion.identity);
+            //Instantiate(expPrefab, transform.position, Quaternion.identity);
+            GameObject expObject = ExpObjectPool.Instance.GetExpObject();
+            expObject.TryGetComponent(out ExpBall expBall);
+            expBall.InitAt(this.transform.position);
             EnemyObjectPool.Instance.ReturnEnemyObject(this.Type, this.gameObject);
         }
     }

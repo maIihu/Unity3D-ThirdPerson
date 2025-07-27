@@ -9640,7 +9640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1905626181230850753}
   m_Layer: 0
-  m_Name: DeadExplode
+  m_Name: DeadExploded
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
