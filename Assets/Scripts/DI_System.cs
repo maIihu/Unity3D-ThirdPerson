@@ -11,43 +11,57 @@ public class DI_System : MonoBehaviour
     [SerializeField] private new Camera camera;
     [SerializeField] private Transform player;
     
-    private Dictionary<Transform, DamageIndicator> indicators = new Dictionary<Transform, DamageIndicator>();
+    private Dictionary<int, DamageIndicator> _indicators;
 
-    #region Delegates
+    private static DI_System _instance;
+    public static DI_System Instance { get { return _instance; } }
 
-    public static Action<Transform> CreateIndicator = delegate{};
-    public static Func<Transform, bool> CheckIfObjectInSight = null;
-
-    #endregion
-
-    private void OnEnable()
+    private void Awake()
     {
-        CreateIndicator += Create;
-        CheckIfObjectInSight += InSight;
+        if(_instance != null &&  _instance != this)
+            Destroy(this.gameObject);
+        else
+            _instance = this;
     }
 
-    private void OnDisable()
+    private void Start()
     {
-        CreateIndicator -= Create;
-        CheckIfObjectInSight -= InSight;
+        _indicators = new Dictionary<int, DamageIndicator>();
     }
 
-    private void Create(Transform target)
+    public void CreateIndicator(EnemyBase target)
     {
-        if (indicators.ContainsKey(target))
+        if (!_indicators.ContainsKey(target.indicatorID))
         {
-            indicators[target].Restart();
-            return;
+            DamageIndicator indicator = Instantiate(indicatorPrefab, holder);
+            indicator.Register(target.transform, player);
+            _indicators.Add(target.indicatorID, indicator);
         }
-        DamageIndicator indicator = Instantiate(indicatorPrefab, holder);
-        indicator.Register(target, player, new Action(() => { indicators.Remove(target);}));
-        
-        indicators.Add(target, indicator);
     }
 
-    private bool InSight(Transform target)
+    public bool CheckIfObjectInSight(Transform target)
     {
-        Vector3 screentPoint = camera.WorldToViewportPoint(target.position);
-        return screentPoint.z > 0 && screentPoint.x > 0 && screentPoint.x < 1 && screentPoint.y > 0 && screentPoint.y < 1;
+        Vector3 screenPoint = camera.WorldToViewportPoint(target.position);
+        Debug.Log($"[{target.name}] Viewport: {screenPoint}");
+
+        return screenPoint is { z: > 0, x: > 0 and < 1, y: > 0 and < 1 };
     }
+
+    public bool Check(Transform target)
+    {
+        Vector3 playerXZ = new Vector3(player.position.x, 0, player.position.z);
+        Vector3 targetXZ = new Vector3(target.position.x, 0, target.position.z);
+        float distance = Vector3.Distance(targetXZ, playerXZ);
+        return distance <= 5;
+    }
+
+    public void RemoveIndicator(int id)
+    {
+        if (_indicators.TryGetValue(id, out DamageIndicator indicator))
+        {
+            _indicators.Remove(id);
+            if (indicator != null) Destroy(indicator.gameObject);
+        }
+    }
+        
 }

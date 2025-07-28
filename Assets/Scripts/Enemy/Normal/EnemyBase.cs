@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,13 +18,17 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     private float _maxHealth;
     
     public BulletObjectPool bulletObjectPool;
+    public int indicatorID { get; private set; }
+    private static int nextID = 0;
     
     private void OnEnable()
     {
         TargetPlayer = GameManager.Instance.GetPlayerTransform();
         _maxHealth = _health = data.health;
         OnHealthChanged?.Invoke(_health, _maxHealth);
+        indicatorID = ++nextID;
     }
+    
     
     protected float DistanceToPlayer()
     {

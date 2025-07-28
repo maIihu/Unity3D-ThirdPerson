@@ -1,29 +1,35 @@
 ﻿
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class TestDetected : MonoBehaviour
 {
-    [Range(5, 30)] [SerializeField] private float destroyTimer = 15;
-
-    // private void OnEnable()
-    // {
-    //     Invoke("Register", Random.Range(0, 8));
-    // }
-
-    private void Update()
+    [SerializeField] private EnemyBase enemy;
+    private void OnEnable()
     {
-        Register();
+        StartCoroutine(Register());
     }
 
-    private void Register()
+    private IEnumerator Register()
     {
-        if (!DI_System.CheckIfObjectInSight(this.transform))
+        while (true)
         {
-            DI_System.CreateIndicator(this.transform);
+            if (!DI_System.Instance.CheckIfObjectInSight(this.transform))
+            {
+                DI_System.Instance.CreateIndicator(enemy);
+            }
+            yield return new WaitForSeconds(1f);
         }
-        //Destroy(this.gameObject, destroyTimer);
+    }
+    
+
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        DI_System.Instance.RemoveIndicator(enemy.indicatorID);
     }
     
 }
