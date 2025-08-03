@@ -18,7 +18,13 @@ public class TestDetected : MonoBehaviour
         {
             if (!DI_System.Instance.CheckIfObjectInSight(this.transform))
             {
+                Debug.Log("Object not in sight");
                 DI_System.Instance.CreateIndicator(enemy);
+            }
+            else
+            {
+                Debug.Log("Object is already in sight.");
+                DI_System.Instance.RemoveIndicator(enemy.indicatorID);
             }
             yield return new WaitForSeconds(1f);
         }

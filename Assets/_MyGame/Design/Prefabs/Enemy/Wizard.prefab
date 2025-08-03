@@ -212,7 +212,7 @@ Transform:
   m_GameObject: {fileID: 2273747801831301958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.23624384, y: 1.27, z: 3.113}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -301,8 +301,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnBulletPoint: {fileID: 2966702733021746743}
   data: {fileID: 11400000, guid: 8b8668cf2d54e8a42a995eb67c5da524, type: 2}
-  expPrefab: {fileID: 721396554780780892, guid: 550e19da909afa24a8cc694c205e3950,
-    type: 3}
   bulletObjectPool: {fileID: 0}
 --- !u!114 &6775112652486639967
 MonoBehaviour:

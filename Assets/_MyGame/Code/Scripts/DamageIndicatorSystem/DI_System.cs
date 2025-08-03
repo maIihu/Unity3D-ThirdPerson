@@ -42,7 +42,6 @@ public class DI_System : MonoBehaviour
     public bool CheckIfObjectInSight(Transform target)
     {
         Vector3 screenPoint = camera.WorldToViewportPoint(target.position);
-        Debug.Log($"[{target.name}] Viewport: {screenPoint}");
 
         return screenPoint is { z: > 0, x: > 0 and < 1, y: > 0 and < 1 };
     }
