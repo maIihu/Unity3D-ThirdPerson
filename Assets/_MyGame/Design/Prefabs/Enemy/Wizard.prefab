@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 5190652988562398631}
   - component: {fileID: 6775112652486639967}
   - component: {fileID: 1992055218884392812}
+  - component: {fileID: 7817495243852593907}
   m_Layer: 14
   m_Name: Wizard
   m_TagString: Untagged
@@ -327,6 +328,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagePopup: {fileID: 8093269678692560542}
+--- !u!114 &7817495243852593907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2273747801831301958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2422ab7dad44da0b6dbac8bc6db00d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 5190652988562398631}
 --- !u!1 &2316115313432695592
 GameObject:
   m_ObjectHideFlags: 0
