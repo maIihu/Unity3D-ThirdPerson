@@ -110,7 +110,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
         bullet.TryGetComponent(out BulletProjectileBase bulletProjectile);
-        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, BulletOwner.Player, bulletObjectPool);
+        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, BulletOwner.Player, bulletObjectPool, 2f);
 
     }
     

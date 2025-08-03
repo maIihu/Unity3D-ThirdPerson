@@ -20,7 +20,7 @@ public class BulletProjectileBase : MonoBehaviour
     
     private Coroutine _lifeTimerCoroutine;
     
-    public void SetupBullet(Vector3 direction, float damage, float speed, BulletOwner bulletOwner, BulletObjectPool bulletObjectPool)
+    public void SetupBullet(Vector3 direction, float damage, float speed, BulletOwner bulletOwner, BulletObjectPool bulletObjectPool, float lifeTimer)
     {
         this._direction = direction;
         _damage = damage;
@@ -28,7 +28,7 @@ public class BulletProjectileBase : MonoBehaviour
         _isFlying = true;
         _bulletOwner = bulletOwner;
         _bulletObjectPool = bulletObjectPool;
-        _lifeTimerCoroutine = StartCoroutine(BulletLifeTimer(3f));
+        _lifeTimerCoroutine = StartCoroutine(BulletLifeTimer(lifeTimer));
     }
 
     private IEnumerator BulletLifeTimer(float time)
