@@ -24,4 +24,5 @@ MonoBehaviour:
   countDownTimer: 2
   moveSpeed: 20
   damage: 10
+  effect: {fileID: 11400000, guid: 538c79c0d2b497f4e893ea3c285c125b, type: 2}
   nextLevelSkill: {fileID: 11400000, guid: 08dcd070bf8d3754699219477680d227, type: 2}

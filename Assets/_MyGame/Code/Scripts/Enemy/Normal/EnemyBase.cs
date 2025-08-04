@@ -65,7 +65,9 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth, IApply
     public event Action<float, float> OnHealthChanged;
     public event Action<Color> OnVisualChanged;
     #endregion
-    
+
+    #region IApplyEffect
+
     public void ApplyIgnite(float damagePerSecond, float duration)
     {
         Debug.Log("AppyIgnite");
@@ -93,4 +95,7 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth, IApply
         ColorUtility.TryParseHtmlString("#D4A017", out Color color);
         OnVisualChanged?.Invoke(color);
     }
+
+    #endregion
+
 }
