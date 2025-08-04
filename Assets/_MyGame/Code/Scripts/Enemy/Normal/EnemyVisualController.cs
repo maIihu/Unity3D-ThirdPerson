@@ -31,18 +31,22 @@ public class EnemyVisualController : MonoBehaviour
         _enemyBase.OnVisualChanged -= HandleVisualChange;
     }
     
-    private void HandleVisualChange(Color damageColor)
+    private void HandleVisualChange(bool hasAttacked)
     {
-        if(_flashCoroutine != null)
-            StopCoroutine(_flashCoroutine);
+        if (hasAttacked)
+        {
+            if(_flashCoroutine != null)
+                StopCoroutine(_flashCoroutine);
         
-        damagePopup.SetActive(true);
-        _flashCoroutine = StartCoroutine(FlashColor(damageColor));
+            damagePopup.SetActive(true);
+            _flashCoroutine = StartCoroutine(FlashColor());
+        }
+        
     }
     
-    private IEnumerator FlashColor(Color damageColor)
+    private IEnumerator FlashColor()
     {
-        _sr.material.color = damageColor;
+        _sr.material.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         _sr.material.color = Color.white;
         _flashCoroutine = null;

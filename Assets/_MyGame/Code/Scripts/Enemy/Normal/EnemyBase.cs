@@ -5,7 +5,7 @@ using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth, IApplyEffect
+public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
 {
     [SerializeField] protected Transform spawnBulletPoint;
     [SerializeField] protected EnemyData data;
@@ -46,6 +46,7 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth, IApply
     {
         _health -= damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
+        OnVisualChanged?.Invoke(true);
         if(_health <= 0)
         {
             //Instantiate(expPrefab, transform.position, Quaternion.identity);
@@ -63,39 +64,8 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth, IApply
     public float CurrentHealth => _maxHealth;
     public float MaxHealth => _health;
     public event Action<float, float> OnHealthChanged;
-    public event Action<Color> OnVisualChanged;
+    public event Action<bool> OnVisualChanged;
     #endregion
-
-    #region IApplyEffect
-
-    public void ApplyIgnite(float damagePerSecond, float duration)
-    {
-        Debug.Log("AppyIgnite");
-        ColorUtility.TryParseHtmlString("#FF6A00", out Color color);
-        OnVisualChanged?.Invoke(color);
-    }
-
-    public void ApplySlow(float duration)
-    {
-        Debug.Log("ApplySlow");
-        ColorUtility.TryParseHtmlString("#3FA7FF", out Color color);
-        OnVisualChanged?.Invoke(color);
-    }
-
-    public void ApplyKnockback(Vector3 direction, float force)
-    {
-        Debug.Log("ApplyKnockback");
-        ColorUtility.TryParseHtmlString("#B8FFF1", out Color color);
-        OnVisualChanged?.Invoke(color);
-    }
-
-    public void ApplyStun(float duration)
-    {
-        Debug.Log("ApplyStun");
-        ColorUtility.TryParseHtmlString("#D4A017", out Color color);
-        OnVisualChanged?.Invoke(color);
-    }
-
-    #endregion
+    
 
 }

@@ -35,14 +35,12 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     private float _damage;
     
     private List<ElementSkillData> _skillOwnerList;
-    private List<BaseEffect> _effectOwnerList;
     
     private Coroutine _damageEffectCoroutine;
     
     private void Start()
     {
         _skillOwnerList  = new List<ElementSkillData>();
-        _effectOwnerList = new List<BaseEffect>();
         
         _maxHealth = _health = data.health;
         _damage = data.damage;
@@ -82,7 +80,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
         bullet.TryGetComponent(out BulletProjectileBase bulletProjectile);
-        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, BulletOwner.Player, bulletObjectPool, 2f, _effectOwnerList);
+        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, BulletOwner.Player, bulletObjectPool, 2f);
 
     }
     
@@ -127,7 +125,6 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         }
 
         _skillOwnerList.Add(newSkill);
-        _effectOwnerList.Add(newSkill.effect);
         Debug.Log("Owner " + newSkill.element);
         // switch (_skillOwnerList.Count)
         // {
