@@ -53,9 +53,6 @@ public class BulletProjectileBase : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        // if (other.GetComponent<BulletProjectileBase>() != null)
-        //     return;
-        //
         if (other.TryGetComponent(out IAttackable target))
         {
             if (target.BulletOwner != _bulletOwner)
@@ -63,7 +60,7 @@ public class BulletProjectileBase : MonoBehaviour
                 target.TakeDamage(_damage);
                 if (other.TryGetComponent(out IApplyEffect applyEffect))
                 {
-                    foreach (BaseEffect effect in _effectList) applyEffect.AppyIgnite(1, 1);
+                    foreach (BaseEffect effect in _effectList) effect.Apply(applyEffect);
                 }
             }
             else

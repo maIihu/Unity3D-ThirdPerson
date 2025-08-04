@@ -5,8 +5,9 @@ using UnityEngine;
 public class IgniteEffect : BaseEffect
 {
     public float damagePerSecond;
-    public override void Apply(EnemyBase enemyTarget)
+
+    public override void Apply(IApplyEffect target)
     {
-        enemyTarget.AppyIgnite(damagePerSecond, Duraction);
+        target.ApplyIgnite(damagePerSecond, Duraction);
     }
 }
