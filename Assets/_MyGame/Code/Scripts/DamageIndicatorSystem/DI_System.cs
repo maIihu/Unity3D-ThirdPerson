@@ -31,11 +31,11 @@ public class DI_System : MonoBehaviour
 
     public void CreateIndicator(EnemyBase target)
     {
-        if (!_indicators.ContainsKey(target.indicatorID))
+        if (!_indicators.ContainsKey(target.IndicatorID))
         {
             DamageIndicator indicator = Instantiate(indicatorPrefab, holder);
             indicator.Register(target.transform, player);
-            _indicators.Add(target.indicatorID, indicator);
+            _indicators.Add(target.IndicatorID, indicator);
         }
     }
 

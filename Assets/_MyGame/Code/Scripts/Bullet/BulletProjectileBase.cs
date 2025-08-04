@@ -19,8 +19,9 @@ public class BulletProjectileBase : MonoBehaviour
     private BulletObjectPool _bulletObjectPool;
     
     private Coroutine _lifeTimerCoroutine;
+    private List<BaseEffect> _effectList;
     
-    public void SetupBullet(Vector3 direction, float damage, float speed, BulletOwner bulletOwner, BulletObjectPool bulletObjectPool, float lifeTimer)
+    public void SetupBullet(Vector3 direction, float damage, float speed, BulletOwner bulletOwner, BulletObjectPool bulletObjectPool, float lifeTimer, List<BaseEffect> effect)
     {
         this._direction = direction;
         _damage = damage;
@@ -28,6 +29,7 @@ public class BulletProjectileBase : MonoBehaviour
         _isFlying = true;
         _bulletOwner = bulletOwner;
         _bulletObjectPool = bulletObjectPool;
+        _effectList = effect;
         _lifeTimerCoroutine = StartCoroutine(BulletLifeTimer(lifeTimer));
     }
 
@@ -57,7 +59,13 @@ public class BulletProjectileBase : MonoBehaviour
         if (other.TryGetComponent(out IAttackable target))
         {
             if (target.BulletOwner != _bulletOwner)
+            {
                 target.TakeDamage(_damage);
+                if (other.TryGetComponent(out IApplyEffect applyEffect))
+                {
+                    foreach (BaseEffect effect in _effectList) applyEffect.AppyIgnite(1, 1);
+                }
+            }
             else
                 return;
         }

@@ -35,15 +35,15 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     private float _damage;
     
     private List<ElementSkillData> _skillOwnerList;
-    private ElementSkillData _skill1;
-    private ElementSkillData _skill2;
-    private ElementSkillData _ultimateSkill;
+    private List<BaseEffect> _effectOwnerList;
     
     private Coroutine _damageEffectCoroutine;
     
     private void Start()
     {
         _skillOwnerList  = new List<ElementSkillData>();
+        _effectOwnerList = new List<BaseEffect>();
+        
         _maxHealth = _health = data.health;
         _damage = data.damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
@@ -59,44 +59,16 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
                 anim.SetTrigger(PlayerString.AttackTrigger);
                 FireRaycast();
             }
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (_skill1)
-                {
-                    GameObject skill = Instantiate(_skill1.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
-                    skill.TryGetComponent(out ElementSkillBase skillBase);
-                    skillBase.Setup(_skill1.moveSpeed, _skill1.timeLife, _skill1.damage);
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (_skill2)
-                {
-                    GameObject skill = Instantiate(_skill2.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
-                    skill.TryGetComponent(out ElementSkillBase skillBase);
-                    skillBase.Setup(_skill2.moveSpeed, _skill2.timeLife, _skill2.damage);
-                }
-            }
         }
-        
     }
-
+    
     private void FireRaycast()
     {
         Vector3 shootTargetPoint;
         muzzleEffect.Play();
          if (Physics.Raycast(fpsCamera.position, fpsCamera.forward, out var hit, attackRaycastDistance))
          {
-             //Debug.Log(hit.collider.gameObject.name);
-             // Debug.DrawRay(spawnBulletPoint.position, fpsCamera.forward * hit.distance, Color.red, 10);
              shootTargetPoint = hit.point;
-             
-             // if (hit.collider.TryGetComponent(out IAttackable attackable))
-             // {
-             //     attackable.TakeDamage(_damage);
-             // }
          }
          else
          {
@@ -110,10 +82,11 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
         bullet.TryGetComponent(out BulletProjectileBase bulletProjectile);
-        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, BulletOwner.Player, bulletObjectPool, 2f);
+        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, BulletOwner.Player, bulletObjectPool, 2f, _effectOwnerList);
 
     }
     
+    #region IAttackable
     public void TakeDamage(float damage)
     {
         _health -= damage;
@@ -121,7 +94,10 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         if(_damageEffectCoroutine == null)
             _damageEffectCoroutine = StartCoroutine(ShowDamageEffect());
     }
-
+    
+    public BulletOwner BulletOwner { get=>BulletOwner.Player; set{} }
+    #endregion
+    
     private IEnumerator ShowDamageEffect()
     {
         damageEffect.SetActive(true);
@@ -129,13 +105,13 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         damageEffect.SetActive(false);
         _damageEffectCoroutine = null;
     }
-
-    public BulletOwner BulletOwner { get=>BulletOwner.Player; set{} }
-
+    
+    #region IHasHealth
     public float CurrentHealth => _maxHealth;
     public float MaxHealth => _health;
     public event Action<float, float> OnHealthChanged;
-
+    #endregion
+    
     public void AddSkill(ElementSkillData newSkill)
     {
         for (int i = 0; i < _skillOwnerList.Count; i++)
@@ -151,20 +127,51 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         }
 
         _skillOwnerList.Add(newSkill);
-        switch (_skillOwnerList.Count)
-        {
-            case 1:
-                _skill1 = _skillOwnerList[0];
-                break;
-            case 2:
-                _skill2 = _skillOwnerList[1];
-                break;
-        }
+        _effectOwnerList.Add(newSkill.effect);
+        Debug.Log("Owner " + newSkill.element);
+        // switch (_skillOwnerList.Count)
+        // {
+        //     case 1:
+        //         _skill1 = _skillOwnerList[0];
+        //         break;
+        //     case 2:
+        //         _skill2 = _skillOwnerList[1];
+        //         break;
+        // }
     }
 
     public List<ElementSkillData> GetSkillOwner()
     {
         return  _skillOwnerList; 
     }
+    
+    #region Old System Skill
+    
+    // private ElementSkillData _skill1;
+    // private ElementSkillData _skill2;
+    // private ElementSkillData _ultimateSkill;
+    // private void UseSkill()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Q))
+    //     {
+    //         if (_skill1)
+    //         {
+    //             GameObject skill = Instantiate(_skill1.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+    //             skill.TryGetComponent(out ElementSkillBase skillBase);
+    //             skillBase.Setup(_skill1.moveSpeed, _skill1.timeLife, _skill1.damage);
+    //         }
+    //     }
+    //     
+    //     if (Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         if (_skill2)
+    //         {
+    //             GameObject skill = Instantiate(_skill2.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+    //             skill.TryGetComponent(out ElementSkillBase skillBase);
+    //             skillBase.Setup(_skill2.moveSpeed, _skill2.timeLife, _skill2.damage);
+    //         }
+    //     }
+    // }
 
+    #endregion
 }

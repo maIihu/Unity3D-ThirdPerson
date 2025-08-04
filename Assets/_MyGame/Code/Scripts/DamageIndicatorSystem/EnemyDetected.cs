@@ -24,7 +24,7 @@ public class EnemyDetected : MonoBehaviour
             else
             {
                 //Debug.Log("Object is already in sight.");
-                DI_System.Instance.RemoveIndicator(enemy.indicatorID);
+                DI_System.Instance.RemoveIndicator(enemy.IndicatorID);
             }
             yield return new WaitForSeconds(1f);
         }
@@ -35,7 +35,7 @@ public class EnemyDetected : MonoBehaviour
     private void OnDisable()
     {
         StopAllCoroutines();
-        DI_System.Instance.RemoveIndicator(enemy.indicatorID);
+        DI_System.Instance.RemoveIndicator(enemy.IndicatorID);
     }
     
 }

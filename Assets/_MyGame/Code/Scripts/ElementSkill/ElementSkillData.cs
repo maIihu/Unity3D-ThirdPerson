@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ElementType { Fire, Water, Wind, Earth, Lightning }
+public enum ElementType { Fire, Water, Wind, Earth }
 public enum SkillLevel {Base, Upgrade1, Upgrade2}
 
 [CreateAssetMenu()]
@@ -19,6 +19,7 @@ public class ElementSkillData : ScriptableObject
     public float countDownTimer;
     public float moveSpeed;
     public float damage;
+    public BaseEffect effect;
 
     public ElementSkillData nextLevelSkill;
 }

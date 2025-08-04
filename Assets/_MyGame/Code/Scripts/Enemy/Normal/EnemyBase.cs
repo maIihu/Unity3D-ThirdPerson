@@ -5,7 +5,7 @@ using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
+public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth, IApplyEffect
 {
     [SerializeField] protected Transform spawnBulletPoint;
     [SerializeField] protected EnemyData data;
@@ -18,18 +18,19 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     private float _maxHealth;
     
     public BulletObjectPool bulletObjectPool;
-    public int indicatorID { get; private set; }
-    private static int nextID = 0;
+    public int IndicatorID { get; private set; }
+    private static int _nextID = 0;
     
     private void OnEnable()
     {
         TargetPlayer = GameManager.Instance.GetPlayerTransform();
         _maxHealth = _health = data.health;
         OnHealthChanged?.Invoke(_health, _maxHealth);
-        indicatorID = ++nextID;
+        IndicatorID = ++_nextID;
     }
-    
-    
+
+    #region Base func
+
     protected float DistanceToPlayer()
     {
         return Vector3.Distance(this.transform.position, TargetPlayer.transform.position);
@@ -37,7 +38,11 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     
     protected abstract void ChaseToPlayerTarget();
     protected abstract void Attack();
+
+    #endregion
+
     
+    #region IAttackable
     public void TakeDamage(float damage)
     {
         _health -= damage;
@@ -54,8 +59,17 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
     }
 
     public BulletOwner BulletOwner => BulletOwner.Enemy;
+    #endregion
+    
+    #region IHasHealth
     public float CurrentHealth => _maxHealth;
     public float MaxHealth => _health;
     public event Action<float, float> OnHealthChanged;
     public event Action<bool> OnVisualChanged;
+    #endregion
+    
+    public void AppyIgnite(float damagePerSecond, float duration)
+    {
+        Debug.Log("AppyIgnite");
+    }
 }

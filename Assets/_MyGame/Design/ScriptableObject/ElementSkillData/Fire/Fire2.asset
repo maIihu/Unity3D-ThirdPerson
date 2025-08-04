@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: 
   element: 0
   skillLevel: 1
-  icon: {fileID: 1576279382, guid: 32075bca2aa54fa48a39a533d71444d9, type: 3}
+  icon: {fileID: -2032822522, guid: 32075bca2aa54fa48a39a533d71444d9, type: 3}
   skillPrefab: {fileID: 7969457063147361436, guid: 31a73daf38a67644cb65f324db3fa42d,
     type: 3}
   amount: 1
@@ -24,4 +24,5 @@ MonoBehaviour:
   countDownTimer: 2
   moveSpeed: 20
   damage: 10
+  effect: {fileID: 11400000, guid: 5e7e8ddcdf321c94f868707448cb5b5b, type: 2}
   nextLevelSkill: {fileID: 11400000, guid: 1e237f117117bd4479eaeabc5ee011c6, type: 2}

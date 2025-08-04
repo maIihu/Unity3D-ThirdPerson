@@ -23,12 +23,14 @@ public class DragonBomb : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Exploded();
+        if(other.CompareTag("Ground"))
+            Exploded();
+        
     }
 
     private void Exploded()
     {
-        Debug.Log("Exploded");
+        //Debug.Log("Exploded");
         if (explodedEffect != null)
         {
             GameObject effect = Instantiate(explodedEffect, transform.position, Quaternion.identity);

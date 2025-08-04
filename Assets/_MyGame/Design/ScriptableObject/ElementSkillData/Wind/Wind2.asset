@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: 
   element: 2
   skillLevel: 1
-  icon: {fileID: 1372594733, guid: 32075bca2aa54fa48a39a533d71444d9, type: 3}
+  icon: {fileID: 2107418613, guid: 32075bca2aa54fa48a39a533d71444d9, type: 3}
   skillPrefab: {fileID: 1092032563934087918, guid: e029bb8f82416de4c992e4d91fece0dc,
     type: 3}
   amount: 1

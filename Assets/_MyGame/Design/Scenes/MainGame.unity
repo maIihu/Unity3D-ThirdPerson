@@ -12728,7 +12728,7 @@ GameObject:
   - component: {fileID: 993692040}
   m_Layer: 9
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -21384,7 +21384,6 @@ MonoBehaviour:
   allSkills:
   - {fileID: 11400000, guid: ef437da153f685a4780e61e30ec8e9b6, type: 2}
   - {fileID: 11400000, guid: f16bec07fa7dceb45a5f6f00fe2bf076, type: 2}
-  - {fileID: 11400000, guid: 26f22b26b0a51b04da076a5bdba52b30, type: 2}
   - {fileID: 11400000, guid: fe1095e75b2cd7c41ba1f1a643c027b2, type: 2}
   - {fileID: 11400000, guid: c6bd5efc101a42a478ac5d83dca1a449, type: 2}
   playerCombat: {fileID: 9158534410171167187}
@@ -26659,14 +26658,14 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 589907844}
   - {fileID: 575550649}
   - {fileID: 1155012116}
-  - {fileID: 1674537726}
   - {fileID: 1956540635}
   - {fileID: 1593728668}
   - {fileID: 122358256}
   - {fileID: 1069263252}
-  - {fileID: 589907844}
+  - {fileID: 1674537726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
