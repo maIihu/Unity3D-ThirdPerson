@@ -11,8 +11,8 @@ public class UIPanelLevelUp : MonoBehaviour
     [SerializeField] private GameObject upgradeItemPrefab;
     [SerializeField] private Transform upgradeContainer;
 
-    [Header("Skill UI")] 
-    [SerializeField] private UIItemSkill[] skillUI;
+    [Header("Skill UI")] [SerializeField] private UIItemSkill skillUI;
+    [SerializeField] private Transform skillUIContainer;
 
     [Header("All Element Skills")]
     [SerializeField] private List<ElementSkillData> allSkills;
@@ -61,7 +61,13 @@ public class UIPanelLevelUp : MonoBehaviour
     private void OnUpgradeSelected(ElementSkillData selectedSkill)
     {
         //Debug.Log("Người chơi đã chọn: " + selectedSkill.name);
-        if(playerCombat.GetSkillOwner().Count <= 1) skillUI[playerCombat.GetSkillOwner().Count].ChangeImageSkill(selectedSkill.icon);
+        if (playerCombat.GetSkillOwner().Count <= 1)
+        {
+            GameObject newSkillUI = Instantiate(skillUI.gameObject, skillUIContainer);
+            newSkillUI.TryGetComponent(out UIItemSkill uiItemSkill);
+            uiItemSkill.ChangeImageSkill(selectedSkill.icon);
+            //newSkillUI.GetComponentInChildren<UIItemSkill>().ChangeImageSkill(selectedSkill.icon);
+        }
         playerCombat.AddSkill(selectedSkill);
         gameObject.SetActive(false);
         GameManager.Instance.ChangeState(GameState.Playing);
