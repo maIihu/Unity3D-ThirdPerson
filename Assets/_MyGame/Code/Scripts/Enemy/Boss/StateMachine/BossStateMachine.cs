@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine
+public class BossStateMachine
 {
-    public EnemyState CurrentState { get; private set; }
+    public BossState CurrentState { get; private set; }
 
-    public void Initialize(EnemyState enemyState)
+    public void Initialize(BossState enemyState)
     {
         CurrentState = enemyState;
         CurrentState.Enter();
     }
 
-    public void ChangeState(EnemyState newState)
+    public void ChangeState(BossState newState)
     {
         CurrentState.Exit();
         CurrentState = newState;
