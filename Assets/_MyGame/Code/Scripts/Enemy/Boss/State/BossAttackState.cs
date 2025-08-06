@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossAttackState : BossState
 {
+    protected bool IsAttackComplete;
     public BossAttackState(BossStateMachine stateMachine, BossController boss) : base(stateMachine, boss)
     {
     }
@@ -11,5 +12,15 @@ public class BossAttackState : BossState
     public override void Enter()
     {
         base.Enter();
+        IsAttackComplete = false;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        if (IsAttackComplete)
+        {
+            
+        }
     }
 }
