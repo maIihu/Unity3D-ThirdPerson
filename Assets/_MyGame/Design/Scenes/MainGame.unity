@@ -132,6 +132,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6596159196194177012, guid: cae8461a34e635648839b230b58f6a56,
         type: 3}
+      propertyPath: fireBall
+      value: 
+      objectReference: {fileID: 4070039684073613452, guid: e5c83c7f13a2b4445ad2ea5169e5ef39,
+        type: 3}
+    - target: {fileID: -6596159196194177012, guid: cae8461a34e635648839b230b58f6a56,
+        type: 3}
       propertyPath: explosionEffect
       value: 
       objectReference: {fileID: 100010, guid: bf6ce3cd3c47ff64cb9bcdfc16964bd6, type: 3}

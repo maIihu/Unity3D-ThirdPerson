@@ -21,7 +21,7 @@ public class BossExplosionSkill : BossAttackState
         _timer -= Time.deltaTime;
         if (_timer <= 0)
         {
-            Debug.Log("No xong");
+            StateMachine.ChangeState(Boss.FireBallSkill);
         }
     }
 }
