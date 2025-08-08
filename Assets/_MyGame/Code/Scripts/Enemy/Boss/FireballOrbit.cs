@@ -2,28 +2,43 @@
 
 public class FireballOrbit : MonoBehaviour
 {
-    public Transform center;
-    public float speed = 50f;
-    public float radius;
-    public float startingAngle = 0f; // Góc khởi đầu (tùy mỗi fireball)
+    [SerializeField] private float rotateSpeed = 50f;   
+    [SerializeField] private float radius = 3f;
+    [SerializeField] private float moveSpeed = 10f;
+    
+    private Transform _bossTransform;
+    private float _angle;
+    
+    private bool _fireActive;
+    private Vector3 _moveDirection;   
 
-    private float angle;
-
-    private void Start()
+    public void Setup(float startingAngle, Transform centerTarget)
     {
-        angle = startingAngle;
+        _angle = startingAngle;
+        _bossTransform = centerTarget;
     }
 
     private void Update()
     {
-        if (center == null) return;
+        if (!_fireActive && _bossTransform)
+        {
+            _angle += rotateSpeed * Time.deltaTime;
+            float rad = _angle * Mathf.Deg2Rad;
+            float x = Mathf.Cos(rad) * radius;
+            float z = Mathf.Sin(rad) * radius;
+            transform.position = _bossTransform.position + new Vector3(x, 0, z);
+        }
+        else
+        {
+            transform.position += _moveDirection * (moveSpeed * Time.deltaTime);
+        }
+    }
 
-        angle += speed * Time.deltaTime;
-        float rad = angle * Mathf.Deg2Rad;
+    public void ShootAt(Vector3 targetPos)
+    {
+        _fireActive = true;
+        _bossTransform = null;
 
-        float x = Mathf.Cos(rad) * radius;
-        float z = Mathf.Sin(rad) * radius;
-
-        transform.position = center.position + new Vector3(x, 0, z);
+        _moveDirection = (targetPos - transform.position).normalized;
     }
 }

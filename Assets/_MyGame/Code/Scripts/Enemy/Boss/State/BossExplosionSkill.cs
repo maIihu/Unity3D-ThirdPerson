@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BossExplosionSkill : BossAttackState
 {
-    private float _timer;
+    private float _timer = 5f;
     public BossExplosionSkill(BossStateMachine stateMachine, BossController boss) : base(stateMachine, boss)
     {
     }

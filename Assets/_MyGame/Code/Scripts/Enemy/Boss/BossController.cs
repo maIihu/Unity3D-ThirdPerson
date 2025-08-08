@@ -7,7 +7,6 @@ public class BossController : MonoBehaviour
 {
     public BossState State { private set; get; }
     public BossStateMachine StateMachine { private set; get; }
-    
     public BossIdleState IdleState { private set; get; }
     public BossMoveState MoveState { private set; get; }
     public BossExplosionSkill ExplosionSkill { private set; get; }
@@ -16,6 +15,10 @@ public class BossController : MonoBehaviour
 
     [SerializeField] public GameObject explosionEffect;
     [SerializeField] public GameObject fireBall;
+    [SerializeField] private Transform attackPoint;
+
+    private Transform _playerTarget;
+    private List<FireballOrbit> _fireballOrbits;
 
     private void Start()
     {
@@ -27,6 +30,8 @@ public class BossController : MonoBehaviour
         DeadState = new BossDeadState(StateMachine, this);
         
         StateMachine.Initialize(IdleState);
+
+        _playerTarget = GameManager.Instance.GetPlayerTransform();
     }
 
     private void Update()
@@ -41,33 +46,39 @@ public class BossController : MonoBehaviour
 
     public void StartExplosionSkill()
     {
-        GameObject explosion = Instantiate(explosionEffect,  transform.position, Quaternion.identity);
+        GameObject explosion = Instantiate(explosionEffect, attackPoint.position, Quaternion.identity);
         Destroy(explosion, 5f);
     }
 
     public void StartFireBallSkill()
     {
+        _fireballOrbits = new List<FireballOrbit>();
+
         int fireballCount = 5;
         float angleStep = 360f / fireballCount;
-        float radius = 1.5f;
 
         for (int i = 0; i < fireballCount; i++)
         {
             float angle = i * angleStep;
-            float rad = angle * Mathf.Deg2Rad;
-
-            Vector3 spawnPos = transform.position + new Vector3(Mathf.Cos(rad), 0, Mathf.Sin(rad)) * radius;
+            Vector3 spawnPos = attackPoint.position;
 
             GameObject fb = Instantiate(fireBall, spawnPos, Quaternion.identity);
+            fb.TryGetComponent(out FireballOrbit orbit);
+            orbit.Setup(angle, attackPoint);
 
-            FireballOrbit orbit = fb.AddComponent<FireballOrbit>();
-            orbit.center = this.transform;
-            orbit.speed = 50f;
-            orbit.radius = radius;
-            orbit.startingAngle = angle; // <-- Đây là phần quan trọng!
+            _fireballOrbits.Add(orbit);
+        }
+        StartCoroutine(FireballSequence());
+    }
+
+    private IEnumerator FireballSequence()
+    {
+        foreach (var orbit in _fireballOrbits)
+        {
+            yield return new WaitForSeconds(2f); 
+            orbit.ShootAt(_playerTarget.position); 
         }
     }
 
-    
     
 }
