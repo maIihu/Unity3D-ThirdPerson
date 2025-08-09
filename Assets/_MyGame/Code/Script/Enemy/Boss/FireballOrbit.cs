@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class FireballOrbit : MonoBehaviour
 {
@@ -40,5 +41,15 @@ public class FireballOrbit : MonoBehaviour
         _bossTransform = null;
 
         _moveDirection = (targetPos - transform.position).normalized;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out IAttackable attackable) && attackable.CharacterType == CharacterType.Player)
+        {
+            Debug.Log("attack player");
+            attackable.TakeDamage(10);
+        }
+        Destroy(gameObject);
     }
 }

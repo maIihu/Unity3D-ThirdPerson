@@ -57,7 +57,7 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
         }
     }
 
-    public BulletOwner BulletOwner => BulletOwner.Enemy;
+    public CharacterType CharacterType => CharacterType.Enemy;
     #endregion
     
     #region IHasHealth

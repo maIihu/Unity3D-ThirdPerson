@@ -15,7 +15,7 @@ public class BossIdleState : BossState
         countdown -= Time.deltaTime;
         if (countdown <= 0f)
         {
-            StateMachine.ChangeState(Boss.ExplosionSkill);
+            StateMachine.ChangeState(Boss.MeteorSkill);
         }
     }
 }

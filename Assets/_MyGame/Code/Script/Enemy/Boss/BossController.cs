@@ -96,6 +96,13 @@ public class BossController : MonoBehaviour
         {
             Vector3 pos = new Vector3(Random.Range(-10, 10), 0,  Random.Range(-10, 10)) + new Vector3(attackPoint.position.x, 0, attackPoint.position.z);
             Instantiate(meteorEffect, pos, Quaternion.identity);
+            // float dist = Vector3.Distance(_playerTarget.position, transform.position);
+            // if (dist <= 5)
+            // {
+            //     // Player trong vùng → gây sát thương
+            //     _playerTarget.TryGetComponent(out PlayerCombat playerCombat);
+            //     playerCombat.TakeDamage(10);
+            // }
         }
     }
 

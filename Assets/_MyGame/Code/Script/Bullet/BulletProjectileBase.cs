@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BulletOwner
+public enum CharacterType
 {
     Player, Enemy
 }
@@ -15,18 +15,18 @@ public class BulletProjectileBase : MonoBehaviour
     private bool _isFlying;
     private float _damage;
     private float _speed;
-    private BulletOwner _bulletOwner;
+    private CharacterType _characterType;
     private BulletObjectPool _bulletObjectPool;
     
     private Coroutine _lifeTimerCoroutine;
     
-    public void SetupBullet(Vector3 direction, float damage, float speed, BulletOwner bulletOwner, BulletObjectPool bulletObjectPool, float lifeTimer)
+    public void SetupBullet(Vector3 direction, float damage, float speed, CharacterType characterType, BulletObjectPool bulletObjectPool, float lifeTimer)
     {
         this._direction = direction;
         _damage = damage;
         _speed = speed;
         _isFlying = true;
-        _bulletOwner = bulletOwner;
+        _characterType = characterType;
         _bulletObjectPool = bulletObjectPool;
         _lifeTimerCoroutine = StartCoroutine(BulletLifeTimer(lifeTimer));
     }
@@ -53,7 +53,7 @@ public class BulletProjectileBase : MonoBehaviour
     {
         if (other.TryGetComponent(out IAttackable target))
         {
-            if (target.BulletOwner != _bulletOwner)
+            if (target.CharacterType != _characterType)
             {
                 target.TakeDamage(_damage);
             }
