@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class BossExplosionSkill : BossAttackState
 {
-    private float _timer = 5f;
     public BossExplosionSkill(BossStateMachine stateMachine, BossController boss) : base(stateMachine, boss)
     {
     }
@@ -12,14 +11,15 @@ public class BossExplosionSkill : BossAttackState
     {
         base.Enter();
         Boss.StartExplosionSkill();
+        DelayTimer = 5f;
         IsAttackComplete = true;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        _timer -= Time.deltaTime;
-        if (_timer <= 0)
+        DelayTimer -= Time.deltaTime;
+        if (DelayTimer <= 0)
         {
             StateMachine.ChangeState(Boss.FireBallSkill);
         }

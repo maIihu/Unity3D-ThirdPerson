@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossAttackState : BossState
 {
     protected bool IsAttackComplete;
+    protected float DelayTimer;
     public BossAttackState(BossStateMachine stateMachine, BossController boss) : base(stateMachine, boss)
     {
     }

@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
+using Vector3 = UnityEngine.Vector3;
 
 public class BossController : MonoBehaviour
 {
@@ -11,14 +15,17 @@ public class BossController : MonoBehaviour
     public BossMoveState MoveState { private set; get; }
     public BossExplosionSkill ExplosionSkill { private set; get; }
     public BossFireBallSkill FireBallSkill { private set; get; }
+    public BossMeteorSkill MeteorSkill { private set; get; }
     public BossDeadState DeadState { private set; get; }
 
     [SerializeField] public GameObject explosionEffect;
     [SerializeField] public GameObject fireBall;
     [SerializeField] private Transform attackPoint;
+    [SerializeField] private GameObject meteorEffect;
 
     private Transform _playerTarget;
     private List<FireballOrbit> _fireballOrbits;
+    private bool _fireballAttack;
 
     private void Start()
     {
@@ -27,6 +34,7 @@ public class BossController : MonoBehaviour
         MoveState = new BossMoveState(StateMachine, this);
         ExplosionSkill = new BossExplosionSkill(StateMachine, this);
         FireBallSkill = new BossFireBallSkill(StateMachine, this);
+        MeteorSkill = new BossMeteorSkill(StateMachine, this);
         DeadState = new BossDeadState(StateMachine, this);
         
         StateMachine.Initialize(IdleState);
@@ -53,7 +61,7 @@ public class BossController : MonoBehaviour
     public void StartFireBallSkill()
     {
         _fireballOrbits = new List<FireballOrbit>();
-
+        _fireballAttack = false;
         int fireballCount = 5;
         float angleStep = 360f / fireballCount;
 
@@ -78,6 +86,22 @@ public class BossController : MonoBehaviour
             yield return new WaitForSeconds(2f); 
             orbit.ShootAt(_playerTarget.position); 
         }
+
+        _fireballAttack = true;
+    }
+
+    public void ActiveMeteorEffect()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 pos = new Vector3(Random.Range(-10, 10), 0,  Random.Range(-10, 10)) + new Vector3(attackPoint.position.x, 0, attackPoint.position.z);
+            Instantiate(meteorEffect, pos, Quaternion.identity);
+        }
+    }
+
+    public bool FireballAttackEnd()
+    {
+        return _fireballAttack;
     }
 
     
