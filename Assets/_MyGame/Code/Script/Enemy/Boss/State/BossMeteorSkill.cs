@@ -10,6 +10,17 @@ public class BossMeteorSkill : BossAttackState
     public override void Enter()
     {
         base.Enter();
-        Boss.ActiveMeteorEffect();
+        Boss.TriggerMeteorSkill();
+        DelayTimer = 6f;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        DelayTimer -= Time.deltaTime;
+        if (DelayTimer <= 0)
+        {
+            StateMachine.ChangeState(Boss.FireballSkill);
+        }
     }
 }

@@ -7,25 +7,29 @@ using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public class BossController : MonoBehaviour
+public class BossController : MonoBehaviour, IHasHealth, IAttackable
 {
-    public BossState State { private set; get; }
+    public BossState CurrentState { private set; get; }
     public BossStateMachine StateMachine { private set; get; }
     public BossIdleState IdleState { private set; get; }
     public BossMoveState MoveState { private set; get; }
     public BossExplosionSkill ExplosionSkill { private set; get; }
-    public BossFireBallSkill FireBallSkill { private set; get; }
+    public BossFireballSkill FireballSkill { private set; get; }
     public BossMeteorSkill MeteorSkill { private set; get; }
     public BossDeadState DeadState { private set; get; }
 
-    [SerializeField] public GameObject explosionEffect;
-    [SerializeField] public GameObject fireBall;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private GameObject meteorEffect;
+    [SerializeField] public GameObject explosionEffectPrefab;
+    [SerializeField] public GameObject fireBallPrefab;
+    [SerializeField] private GameObject meteorEffectPrefab;
 
+    [SerializeField] private Transform skillSpawnPoint;
+    
     private Transform _playerTarget;
-    private List<FireballOrbit> _fireballOrbits;
-    private bool _fireballAttack;
+    private List<FireballOrbit> _activeFireballOrbits;
+    private bool _hasFireballAttackEnded;
+
+    private float _maxHealth;
+    private float _currenHealth;
 
     private void Start()
     {
@@ -33,15 +37,18 @@ public class BossController : MonoBehaviour
         IdleState = new BossIdleState(StateMachine, this);
         MoveState = new BossMoveState(StateMachine, this);
         ExplosionSkill = new BossExplosionSkill(StateMachine, this);
-        FireBallSkill = new BossFireBallSkill(StateMachine, this);
+        FireballSkill = new BossFireballSkill(StateMachine, this);
         MeteorSkill = new BossMeteorSkill(StateMachine, this);
         DeadState = new BossDeadState(StateMachine, this);
         
         StateMachine.Initialize(IdleState);
 
         _playerTarget = GameManager.Instance.GetPlayerTransform();
-    }
 
+        _maxHealth = 100;
+        _currenHealth = _maxHealth;
+    }
+    
     private void Update()
     {
         StateMachine.CurrentState.LogicUpdate();
@@ -52,64 +59,81 @@ public class BossController : MonoBehaviour
         StateMachine.CurrentState.PhysicsUpdate();
     }
 
-    public void StartExplosionSkill()
+    public void TriggerExplosionSkill()
     {
-        GameObject explosion = Instantiate(explosionEffect, attackPoint.position, Quaternion.identity);
+        GameObject explosion = Instantiate(explosionEffectPrefab, skillSpawnPoint.position, Quaternion.identity);
         Destroy(explosion, 5f);
     }
 
-    public void StartFireBallSkill()
+    public void TriggerFireballSkill()
     {
-        _fireballOrbits = new List<FireballOrbit>();
-        _fireballAttack = false;
+        _activeFireballOrbits = new List<FireballOrbit>();
+        _hasFireballAttackEnded = false;
         int fireballCount = 5;
         float angleStep = 360f / fireballCount;
 
         for (int i = 0; i < fireballCount; i++)
         {
             float angle = i * angleStep;
-            Vector3 spawnPos = attackPoint.position;
+            Vector3 spawnPos = skillSpawnPoint.position;
 
-            GameObject fb = Instantiate(fireBall, spawnPos, Quaternion.identity);
+            GameObject fb = Instantiate(fireBallPrefab, spawnPos, Quaternion.identity);
             fb.TryGetComponent(out FireballOrbit orbit);
-            orbit.Setup(angle, attackPoint);
+            orbit.Setup(angle, skillSpawnPoint);
 
-            _fireballOrbits.Add(orbit);
+            _activeFireballOrbits.Add(orbit);
         }
-        StartCoroutine(FireballSequence());
+        StartCoroutine(FireballAttackSequence());
     }
 
-    private IEnumerator FireballSequence()
+    private IEnumerator FireballAttackSequence()
     {
-        foreach (var orbit in _fireballOrbits)
+        foreach (var orbit in _activeFireballOrbits)
         {
             yield return new WaitForSeconds(2f); 
             orbit.ShootAt(_playerTarget.position); 
         }
-
-        _fireballAttack = true;
+        _hasFireballAttackEnded = true;
     }
 
-    public void ActiveMeteorEffect()
+    public void TriggerMeteorSkill()
     {
         for (int i = 0; i < 3; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(-10, 10), 0,  Random.Range(-10, 10)) + new Vector3(attackPoint.position.x, 0, attackPoint.position.z);
-            Instantiate(meteorEffect, pos, Quaternion.identity);
-            // float dist = Vector3.Distance(_playerTarget.position, transform.position);
-            // if (dist <= 5)
-            // {
-            //     // Player trong vùng → gây sát thương
-            //     _playerTarget.TryGetComponent(out PlayerCombat playerCombat);
-            //     playerCombat.TakeDamage(10);
-            // }
+            Vector3 pos = new Vector3(Random.Range(-10, 10), 0,  Random.Range(-10, 10)) + new Vector3(skillSpawnPoint.position.x, 0, skillSpawnPoint.position.z);
+            GameObject meteor = Instantiate(meteorEffectPrefab, pos, Quaternion.identity);
+            Destroy(meteor, 4f);
         }
     }
 
-    public bool FireballAttackEnd()
+    public bool HasFireballAttackEnded()
     {
-        return _fireballAttack;
+        return _hasFireballAttackEnded;
     }
 
+    #region IHasHealth
+
+    public float CurrentHealth => _currenHealth;
+    public float MaxHealth => _maxHealth;
+    public event Action<float, float> OnHealthChanged;
+
+    #endregion
     
+    #region IAttackable
+
+    public void TakeDamage(float damage)
+    {
+        _currenHealth -= damage;
+        OnHealthChanged?.Invoke(_currenHealth, _maxHealth);
+    }
+
+    public bool IsDead()
+    {
+        return _currenHealth <= 0;
+    }
+
+    public CharacterType CharacterType => CharacterType.Enemy;
+
+    #endregion
+
 }

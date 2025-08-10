@@ -1,23 +1,23 @@
 ﻿
 using UnityEngine;
 
-public class BossFireBallSkill : BossAttackState
+public class BossFireballSkill : BossAttackState
 {
-    public BossFireBallSkill(BossStateMachine stateMachine, BossController boss) : base(stateMachine, boss)
+    public BossFireballSkill(BossStateMachine stateMachine, BossController boss) : base(stateMachine, boss)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
-        Boss.StartFireBallSkill();
+        Boss.TriggerFireballSkill();
         DelayTimer = 3f;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (Boss.FireballAttackEnd())
+        if (Boss.HasFireballAttackEnded())
         {
             IsAttackComplete = true;
             DelayTimer -= Time.deltaTime;

@@ -47,7 +47,6 @@ public class FireballOrbit : MonoBehaviour
     {
         if (other.TryGetComponent(out IAttackable attackable) && attackable.CharacterType == CharacterType.Player)
         {
-            Debug.Log("attack player");
             attackable.TakeDamage(10);
         }
         Destroy(gameObject);

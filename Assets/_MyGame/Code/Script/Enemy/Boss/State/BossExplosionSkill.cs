@@ -10,8 +10,8 @@ public class BossExplosionSkill : BossAttackState
     public override void Enter()
     {
         base.Enter();
-        Boss.StartExplosionSkill();
-        DelayTimer = 5f;
+        Boss.TriggerExplosionSkill();
+        DelayTimer = 3f;
         IsAttackComplete = true;
     }
 
@@ -21,7 +21,7 @@ public class BossExplosionSkill : BossAttackState
         DelayTimer -= Time.deltaTime;
         if (DelayTimer <= 0)
         {
-            StateMachine.ChangeState(Boss.FireBallSkill);
+            StateMachine.ChangeState(Boss.FireballSkill);
         }
     }
 }

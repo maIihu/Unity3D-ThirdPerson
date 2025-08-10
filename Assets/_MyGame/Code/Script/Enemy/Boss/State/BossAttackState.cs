@@ -21,6 +21,10 @@ public class BossAttackState : BossState
         base.LogicUpdate();
         if (IsAttackComplete)
         {
+            if (Boss.IsDead())
+            {
+                Boss.StateMachine.ChangeState(Boss.DeadState);
+            }
             
         }
     }

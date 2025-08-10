@@ -93,7 +93,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
             _damageEffectCoroutine = StartCoroutine(ShowDamageEffect());
     }
     
-    public CharacterType CharacterType { get=>CharacterType.Player; set{} }
+    public CharacterType CharacterType => CharacterType.Player; 
     #endregion
     
     private IEnumerator ShowDamageEffect()
