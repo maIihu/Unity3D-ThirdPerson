@@ -16,17 +16,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     public GameState CurrentState { get; private set; }
 
+    public float GameTimer { get; private set; }
+
     private void Awake()
     {
         if(_instance != null && _instance != this)
             Destroy(this.gameObject);
         else
             _instance = this;
+        
+        InitializeState();
+        GameTimer = 60f;
     }
 
     private void Start()
     {
-        InitializeState();
     }
 
     private void InitializeState()
@@ -46,8 +50,6 @@ public class GameManager : MonoBehaviour
         switch (CurrentState)
         {
             case GameState.Pause:
-                Time.timeScale = 0;
-                break;
             case GameState.LevelUp:
                 Time.timeScale = 0;
                 Cursor.lockState = CursorLockMode.None;

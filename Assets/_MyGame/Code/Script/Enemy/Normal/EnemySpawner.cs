@@ -9,14 +9,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private float spawnTimer;
     [SerializeField] private EnemyType enemyType;
-    
-    private float _nextSpawnTime;
+    [SerializeField] private float nextSpawnTime;
     
     private void Update()
     {
-        if (Time.time >= _nextSpawnTime)
+        if (Time.time >= nextSpawnTime)
         {
-            _nextSpawnTime = spawnTimer + Time.time;
+            nextSpawnTime = spawnTimer + Time.time;
             GameObject enemy = enemyObjectPool.GetEnemyObject(enemyType);
             enemy.transform.position = this.transform.position;
             enemy.TryGetComponent(out EnemyBase enemyBase);
