@@ -52,7 +52,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         {
             if (Input.GetMouseButtonDown(0))
             {
-                anim.SetTrigger(PlayerString.AttackTrigger);
+                //anim.SetTrigger(PlayerString.AttackTrigger);
                 FireRaycast();
             }
         }
@@ -78,7 +78,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
         bullet.TryGetComponent(out ProjectileBase bulletProjectile);
-        bulletProjectile.SetupBullet(bulletDir, bulletObjectPool, 2f);
+        bulletProjectile.SetupBullet(bulletDir, bulletObjectPool, CharacterType.Player);
 
     }
     

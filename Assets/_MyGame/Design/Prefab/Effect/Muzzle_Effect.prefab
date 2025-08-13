@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6288767311659179041}
   - component: {fileID: 3439272176431739160}
   - component: {fileID: 7835615221168624293}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4908,7 +4908,7 @@ GameObject:
   - component: {fileID: 2254973060212070660}
   - component: {fileID: 1079375269630885889}
   - component: {fileID: 4096317155080360}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Muzzle_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9798,7 +9798,7 @@ GameObject:
   - component: {fileID: 4944405571719266728}
   - component: {fileID: 1519676722328671235}
   - component: {fileID: 5983917232158386572}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10391,7 +10391,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 20
+    maxNumParticles: 10
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 1
     rotation3D: 0

@@ -7,35 +7,51 @@ public enum CharacterType
     Player, Enemy
 }
 
-public class ProjectileBase : MonoBehaviour
+public abstract class ProjectileBase : MonoBehaviour
 {
-    protected Vector3 _direction;
-    protected bool _isFlying;
+    [SerializeField] protected ProjectileData data;
+
+    protected Vector3 Direction;
+    protected bool IsFlying;
     protected CharacterType CharacterOwnerType;
-    protected BulletObjectPool _bulletObjectPool;
     
-    protected Coroutine _lifeTimerCoroutine;
+    private BulletObjectPool _bulletObjectPool;
+    private Coroutine _lifeTimerCoroutine;
     
-    public void SetupBullet(Vector3 direction, BulletObjectPool bulletObjectPool, float lifeTimer)
+    private void OnEnable()
     {
-        this._direction = direction;
-        _isFlying = true;
+        IsFlying = true;
+        _lifeTimerCoroutine = StartCoroutine(BulletLifeTimer(data.lifeTime));
+    }
+    
+    public void SetupBullet(Vector3 direction, BulletObjectPool bulletObjectPool, CharacterType characterOwnerType)
+    {
+        this.Direction = direction;
         _bulletObjectPool = bulletObjectPool;
-        _lifeTimerCoroutine = StartCoroutine(BulletLifeTimer(lifeTimer));
+        CharacterOwnerType = characterOwnerType;
     }
 
     private IEnumerator BulletLifeTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        if (_isFlying)
-        {
-            _isFlying = false;
-            _bulletObjectPool.ReturnBulletObject(gameObject);
-        }
+        if (!IsFlying) yield break;
+        ReturnToPool();
     }
+    
+    protected void ReturnToPool()
+    {
+        IsFlying = false;
+        _bulletObjectPool.ReturnBulletObject(gameObject);
+        if (_lifeTimerCoroutine != null)
+            StopCoroutine(_lifeTimerCoroutine);
+    }
+
+
     
     private void OnDisable()
     {
-        _isFlying = false;
+        IsFlying = false;
     }
+
+    protected abstract void ProjectileFly();
 }

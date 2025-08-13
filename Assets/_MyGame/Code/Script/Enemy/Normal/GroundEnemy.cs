@@ -55,6 +55,6 @@ public class GroundEnemy : EnemyBase
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
         bullet.TryGetComponent(out ProjectileBase bulletProjectile);
-        bulletProjectile.SetupBullet(bulletDir, bulletObjectPool, 1f);
+        bulletProjectile.SetupBullet(bulletDir, bulletObjectPool, CharacterType.Enemy);
     }
 }

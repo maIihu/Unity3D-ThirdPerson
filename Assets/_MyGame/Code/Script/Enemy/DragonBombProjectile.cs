@@ -1,25 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿
+using System;
 using UnityEngine;
 
-public class DragonBomb : MonoBehaviour
+public class DragonBombProjectile : ProjectileBase
 {
-    [SerializeField] private float fallSpeed = 5f;
     [SerializeField] private float explosionRadius = 3f;
-    [SerializeField] private float damage = 30f;
     [SerializeField] private GameObject explodedEffect;
-    
-    private Rigidbody _rb;
 
+    private Rigidbody _rb;
+    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        _rb.MovePosition(transform.position + Vector3.down * (fallSpeed * Time.fixedDeltaTime));
+        if (IsFlying)
+        {
+            ProjectileFly();
+        }
     }
+
+    protected override void ProjectileFly()
+    {
+        _rb.MovePosition(transform.position + Vector3.down * (data.speed * Time.fixedDeltaTime));
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Ground"))
@@ -41,7 +48,7 @@ public class DragonBomb : MonoBehaviour
         {
             if (hit.TryGetComponent<IAttackable>(out var target))
             {
-                target.TakeDamage(damage);
+                target.TakeDamage(data.damage);
             }
         }
         Destroy(gameObject);
