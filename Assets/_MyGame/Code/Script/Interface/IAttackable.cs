@@ -4,5 +4,5 @@ using UnityEngine;
 public interface IAttackable
 {
     public void TakeDamage(float damage);
-    public CharacterType CharacterType { get; }
+    public CharacterType GetCharacterType { get;  }
 }

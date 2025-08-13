@@ -32,7 +32,6 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     private Vector3 _mouseWorldPos;
     private float _health;
     private float _maxHealth;
-    private float _damage;
     
     private List<ElementSkillData> _skillOwnerList;
     
@@ -43,7 +42,6 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         _skillOwnerList  = new List<ElementSkillData>();
         
         _maxHealth = _health = data.health;
-        _damage = data.damage;
         OnHealthChanged?.Invoke(_health, _maxHealth);
         damageEffect.SetActive(false);
     }
@@ -79,8 +77,8 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         bullet.transform.position = spawnBulletPoint.position;
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
-        bullet.TryGetComponent(out BulletProjectileBase bulletProjectile);
-        bulletProjectile.SetupBullet(bulletDir, _damage, 20f, CharacterType.Player, bulletObjectPool, 2f);
+        bullet.TryGetComponent(out ProjectileBase bulletProjectile);
+        bulletProjectile.SetupBullet(bulletDir, bulletObjectPool, 2f);
 
     }
     
@@ -93,7 +91,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
             _damageEffectCoroutine = StartCoroutine(ShowDamageEffect());
     }
     
-    public CharacterType CharacterType => CharacterType.Player; 
+    public CharacterType GetCharacterType => CharacterType.Player;
     #endregion
     
     private IEnumerator ShowDamageEffect()

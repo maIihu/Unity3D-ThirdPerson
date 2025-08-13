@@ -57,7 +57,7 @@ public abstract class EnemyBase : MonoBehaviour, IAttackable, IHasHealth
         }
     }
 
-    public CharacterType CharacterType => CharacterType.Enemy;
+    public CharacterType GetCharacterType => CharacterType.Enemy;
     #endregion
     
     #region IHasHealth

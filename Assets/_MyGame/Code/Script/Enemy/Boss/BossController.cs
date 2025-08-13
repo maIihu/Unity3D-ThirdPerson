@@ -132,7 +132,7 @@ public class BossController : MonoBehaviour, IHasHealth, IAttackable
         return _currenHealth <= 0;
     }
 
-    public CharacterType CharacterType => CharacterType.Enemy;
+    public CharacterType GetCharacterType => CharacterType.Enemy;
 
     #endregion
 

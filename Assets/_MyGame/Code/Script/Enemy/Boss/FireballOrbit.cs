@@ -45,7 +45,7 @@ public class FireballOrbit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IAttackable attackable) && attackable.CharacterType == CharacterType.Player)
+        if (other.TryGetComponent(out IAttackable attackable) && attackable.GetCharacterType == CharacterType.Player)
         {
             attackable.TakeDamage(10);
         }
