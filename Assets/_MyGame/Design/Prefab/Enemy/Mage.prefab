@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 1456699817517798793}
   - component: {fileID: 5587916400603846030}
   m_Layer: 14
-  m_Name: Dragon
+  m_Name: Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,9 +192,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7503099752846033884}
   - {fileID: 2966702733021746743}
   - {fileID: 6696689083851003864}
-  - {fileID: 7503099752846033884}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5733229294802608505
@@ -216,8 +216,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 2.3, z: 1}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Size: {x: 2, y: 2.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7450582045195056218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2273747801831301958}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b54343adb4f1f28468e81b6bf756a2e2, type: 3}
   m_Name: 
@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 7503099752846033884}
   - component: {fileID: 2839094619469488895}
   m_Layer: 14
-  m_Name: Sprite
+  m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -585,7 +585,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b0e06e91681a7ba4e8020a22711539bc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20ddb7c0bbddff649a71299338ffbe89, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

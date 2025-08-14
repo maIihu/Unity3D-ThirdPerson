@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
         _maxExp = data.exp;
         _currentLevel = data.level;
         expBar.UpdateBarUI(_currentExp, _maxExp, _currentLevel);
+        _currentExp = _maxExp;
+        LevelUp();
     }
 
     private void Update()
@@ -120,10 +122,15 @@ public class PlayerMovement : MonoBehaviour
         expBar.UpdateBarUI(_currentExp, _maxExp, _currentLevel);
         if (_currentExp >= _maxExp)
         {
-            _currentLevel++;
-            _currentExp -=  _maxExp;
-            expBar.UpdateBarUI(_currentExp, _maxExp, _currentLevel);
-            uiManager.PlayerLevelUp();
+            LevelUp();
         }
+    }
+
+    private void LevelUp()
+    {
+        _currentLevel++;
+        _currentExp -=  _maxExp;
+        expBar.UpdateBarUI(_currentExp, _maxExp, _currentLevel);
+        uiManager.PlayerLevelUp();
     }
 }

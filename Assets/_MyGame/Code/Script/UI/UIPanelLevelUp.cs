@@ -42,7 +42,7 @@ public class UIPanelLevelUp : MonoBehaviour
 
     public void ShowUpgradeOptions()
     {
-        var options = GetUpgradeOptions();
+        var options = allSkills;
 
         for (int i = 0; i < _upgradeSlots.Count; i++)
         {
@@ -61,54 +61,16 @@ public class UIPanelLevelUp : MonoBehaviour
     private void OnUpgradeSelected(ElementSkillData selectedSkill)
     {
         //Debug.Log("Người chơi đã chọn: " + selectedSkill.name);
-        if (playerCombat.GetSkillOwner().Count <= 1)
-        {
-            GameObject newSkillUI = Instantiate(skillUI.gameObject, skillUIContainer);
-            newSkillUI.TryGetComponent(out UIItemSkill uiItemSkill);
-            uiItemSkill.ChangeImageSkill(selectedSkill.icon);
-            //newSkillUI.GetComponentInChildren<UIItemSkill>().ChangeImageSkill(selectedSkill.icon);
-        }
-        playerCombat.AddSkill(selectedSkill);
+        // if (playerCombat.GetSkillOwner().Count <= 1)
+        // {
+        //     GameObject newSkillUI = Instantiate(skillUI.gameObject, skillUIContainer);
+        //     newSkillUI.TryGetComponent(out UIItemSkill uiItemSkill);
+        //     uiItemSkill.ChangeImageSkill(selectedSkill.icon);
+        //     //newSkillUI.GetComponentInChildren<UIItemSkill>().ChangeImageSkill(selectedSkill.icon);
+        // }
+        allSkills.Remove(selectedSkill);
+        playerCombat.AddProjectile(selectedSkill);
         gameObject.SetActive(false);
         GameManager.Instance.ChangeState(GameState.Playing);
-    }
-
-    private List<ElementSkillData> GetUpgradeOptions()
-    {
-        List<ElementSkillData> playerSkills = playerCombat.GetSkillOwner();
-
-        if (playerSkills.Count == 0)
-        {
-            return GetRandomBaseSkillsExcluding(null, UpgradeSlotCount);
-        }
-
-        if (playerSkills.Count == 1)
-        {
-            return GetRandomBaseSkillsExcluding(playerSkills[0].element, UpgradeSlotCount);
-        }
-
-        return GetRandomUpgradeFromCurrent(playerSkills);
-    }
-
-
-    private List<ElementSkillData> GetRandomBaseSkillsExcluding(ElementType? excludedElement, int count)
-    {
-        return allSkills
-            .Where(skill => skill.skillLevel == SkillLevel.Base && (excludedElement == null || skill.element != excludedElement))
-            .OrderBy(_ => Random.value)
-            .Take(count)
-            .ToList();
-    }
-
-    private List<ElementSkillData> GetRandomUpgradeFromCurrent(List<ElementSkillData> currentSkills)
-    {
-        var upgradeable = currentSkills
-            .Where(skill => skill.nextLevelSkill)
-            .Select(skill => skill.nextLevelSkill)
-            .ToList();
-
-        if (upgradeable.Count == 0) return new List<ElementSkillData>();
-
-        return new List<ElementSkillData> { upgradeable[Random.Range(0, upgradeable.Count)] };
     }
 }

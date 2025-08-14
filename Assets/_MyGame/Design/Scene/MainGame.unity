@@ -7609,7 +7609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &645615870
 Transform:
   m_ObjectHideFlags: 0
@@ -22119,10 +22119,9 @@ MonoBehaviour:
   skillUI: {fileID: 2754546406332030341, guid: ea18cd5300e146244a2d4d895e25b742, type: 3}
   skillUIContainer: {fileID: 122358256}
   allSkills:
-  - {fileID: 11400000, guid: ef437da153f685a4780e61e30ec8e9b6, type: 2}
-  - {fileID: 11400000, guid: f16bec07fa7dceb45a5f6f00fe2bf076, type: 2}
-  - {fileID: 11400000, guid: fe1095e75b2cd7c41ba1f1a643c027b2, type: 2}
-  - {fileID: 11400000, guid: c6bd5efc101a42a478ac5d83dca1a449, type: 2}
+  - {fileID: 11400000, guid: 9772d693fc1247e4fbf70a1ffdcdfbe9, type: 2}
+  - {fileID: 11400000, guid: 0d0fd1803afa5204794ec68c87ad09f7, type: 2}
+  - {fileID: 11400000, guid: 9b8b4cca75c8ce846b715763ecac2966, type: 2}
   playerCombat: {fileID: 9158534410171167187}
 --- !u!1001 &1679799820
 PrefabInstance:
@@ -28391,7 +28390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab:
-  - {fileID: 2645436990031556792, guid: 7427ae389bdc4de41ac48e92b5609d0e, type: 3}
+  - {fileID: 2645436990031556792, guid: c2c3f36e93233e44da4a072aee073e43, type: 3}
   bulletPoolSize: 30
 --- !u!199 &4212824255958514564
 ParticleSystemRenderer:
@@ -43288,12 +43287,10 @@ MonoBehaviour:
   attackRaycastDistance: 50
   mid: {fileID: 468846919}
   data: {fileID: 11400000, guid: 5799ff7e622ff7a45b7c261ed6b1e578, type: 2}
-  anim: {fileID: 0}
+  anim: {fileID: 1155012119}
   fpsCamera: {fileID: 4705287711620225530}
   muzzleEffect: {fileID: 7460043755980919305}
   damageEffect: {fileID: 1069263251}
-  skillPrefab: {fileID: 7969457063147361436, guid: 31a73daf38a67644cb65f324db3fa42d,
-    type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -10,16 +10,7 @@ public class ElementSkillData : ScriptableObject
 {
     public string SkillName;
     public string Description;
-    public ElementType element;
-    public SkillLevel skillLevel;
     public Sprite icon;
-    public GameObject skillPrefab;
-    public float amount;
-    public float timeLife;
-    public float countDownTimer;
-    public float moveSpeed;
-    public float damage;
+    public PlayerProjectile skillPrefab;
     public BaseEffect effect;
-
-    public ElementSkillData nextLevelSkill;
 }

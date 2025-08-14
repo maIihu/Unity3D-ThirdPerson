@@ -26,21 +26,18 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     [SerializeField] private ParticleSystem muzzleEffect;
     [SerializeField] private GameObject damageEffect;
     
-    [Header("Skill")]
-    [SerializeField] private GameObject skillPrefab;
+    private List<PlayerProjectile> _projectilesOwner;
+    private PlayerProjectile _currentProjectile;
     
     private Vector3 _mouseWorldPos;
     private float _health;
     private float _maxHealth;
     
-    private List<ElementSkillData> _skillOwnerList;
-    
     private Coroutine _damageEffectCoroutine;
     
     private void Start()
     {
-        _skillOwnerList  = new List<ElementSkillData>();
-        
+        _projectilesOwner = new List<PlayerProjectile>();
         _maxHealth = _health = data.health;
         OnHealthChanged?.Invoke(_health, _maxHealth);
         damageEffect.SetActive(false);
@@ -52,7 +49,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
         {
             if (Input.GetMouseButtonDown(0))
             {
-                //anim.SetTrigger(PlayerString.AttackTrigger);
+                anim.SetTrigger(PlayerString.AttackTrigger);
                 FireRaycast();
             }
         }
@@ -73,11 +70,12 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
 
          Vector3 bulletDir = (shootTargetPoint - spawnBulletPoint.position).normalized;
         
-        var bullet = bulletObjectPool.GetBulletObject();
+        //var bullet = bulletObjectPool.GetBulletObject();
+        var bullet = Instantiate(_currentProjectile);
         bullet.transform.position = spawnBulletPoint.position;
         bullet.transform.rotation = Quaternion.LookRotation(bulletDir);
         
-        bullet.TryGetComponent(out ProjectileBase bulletProjectile);
+        bullet.TryGetComponent(out PlayerProjectile bulletProjectile);
         bulletProjectile.SetupBullet(bulletDir, bulletObjectPool, CharacterType.Player);
 
     }
@@ -108,65 +106,11 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     public event Action<float, float> OnHealthChanged;
     #endregion
     
-    public void AddSkill(ElementSkillData newSkill)
+    public void AddProjectile(ElementSkillData newSkill)
     {
-        for (int i = 0; i < _skillOwnerList.Count; i++)
-        {
-            if (_skillOwnerList[i].element == newSkill.element)
-            {
-                if ((int)newSkill.skillLevel > (int)_skillOwnerList[i].skillLevel)
-                {
-                    _skillOwnerList[i] = newSkill;
-                }
-                return;
-            }
-        }
-
-        _skillOwnerList.Add(newSkill);
-        Debug.Log("Owner " + newSkill.element);
-        // switch (_skillOwnerList.Count)
-        // {
-        //     case 1:
-        //         _skill1 = _skillOwnerList[0];
-        //         break;
-        //     case 2:
-        //         _skill2 = _skillOwnerList[1];
-        //         break;
-        // }
+        _projectilesOwner.Add(newSkill.skillPrefab);
+        if (_projectilesOwner.Count > 1) return;
+        _currentProjectile = _projectilesOwner[0];
     }
 
-    public List<ElementSkillData> GetSkillOwner()
-    {
-        return  _skillOwnerList; 
-    }
-    
-    #region Old System Skill
-    
-    // private ElementSkillData _skill1;
-    // private ElementSkillData _skill2;
-    // private ElementSkillData _ultimateSkill;
-    // private void UseSkill()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.Q))
-    //     {
-    //         if (_skill1)
-    //         {
-    //             GameObject skill = Instantiate(_skill1.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
-    //             skill.TryGetComponent(out ElementSkillBase skillBase);
-    //             skillBase.Setup(_skill1.moveSpeed, _skill1.timeLife, _skill1.damage);
-    //         }
-    //     }
-    //     
-    //     if (Input.GetKeyDown(KeyCode.E))
-    //     {
-    //         if (_skill2)
-    //         {
-    //             GameObject skill = Instantiate(_skill2.skillPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
-    //             skill.TryGetComponent(out ElementSkillBase skillBase);
-    //             skillBase.Setup(_skill2.moveSpeed, _skill2.timeLife, _skill2.damage);
-    //         }
-    //     }
-    // }
-
-    #endregion
 }
