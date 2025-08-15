@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc702c06e01d400b9b6622b603576fec, type: 3}
   m_Name: BlueBallProjectile
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 40
   lifeTime: 5
-  speed: 18
+  speed: 25
+  cooldown: 1.5

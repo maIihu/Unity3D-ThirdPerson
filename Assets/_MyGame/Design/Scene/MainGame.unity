@@ -25038,13 +25038,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1868054721}
+  - component: {fileID: 1868054722}
   m_Layer: 0
   m_Name: BossSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1868054721
 Transform:
   m_ObjectHideFlags: 0
@@ -25060,6 +25061,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1868054722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868054720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951b05c8377a4e48839bb34f1a254dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossPrefab: {fileID: 8613804615585785191, guid: cae8461a34e635648839b230b58f6a56,
+    type: 3}
+  timeToSpawn: 10
 --- !u!1001 &1871724823
 PrefabInstance:
   m_ObjectHideFlags: 0

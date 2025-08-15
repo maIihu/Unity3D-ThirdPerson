@@ -28,10 +28,13 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     
     private List<PlayerProjectile> _projectilesOwner;
     private PlayerProjectile _currentProjectile;
+    private int _indexProjectile;
     
     private Vector3 _mouseWorldPos;
     private float _health;
     private float _maxHealth;
+
+    private float _nextTimeAttack;
     
     private Coroutine _damageEffectCoroutine;
     
@@ -47,12 +50,28 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     {
         if(GameManager.Instance.CurrentState == GameState.Playing)
         {
-            if (Input.GetMouseButtonDown(0))
+            float mouseScroll = Input.GetAxis("Mouse ScrollWheel");
+            if (mouseScroll > 0)
+            {
+                _indexProjectile++;
+                if(_indexProjectile >= _projectilesOwner.Count) _indexProjectile = 0;
+                _currentProjectile = _projectilesOwner[_indexProjectile];
+            }
+            else if (mouseScroll < 0)
+            {
+                _indexProjectile--;
+                if (_indexProjectile < 0) _indexProjectile = _projectilesOwner.Count - 1;
+                _currentProjectile = _projectilesOwner[_indexProjectile];
+            }
+            
+            if (Input.GetMouseButtonDown(0) && Time.time >= _nextTimeAttack)
             {
                 anim.SetTrigger(PlayerString.AttackTrigger);
                 FireRaycast();
+                _nextTimeAttack = Time.time + _currentProjectile.data.cooldown;
             }
         }
+        
     }
     
     private void FireRaycast()
@@ -110,7 +129,8 @@ public class PlayerCombat : MonoBehaviour, IAttackable, IHasHealth
     {
         _projectilesOwner.Add(newSkill.skillPrefab);
         if (_projectilesOwner.Count > 1) return;
-        _currentProjectile = _projectilesOwner[0];
+        _indexProjectile = 0;
+        _currentProjectile = _projectilesOwner[_indexProjectile];
     }
 
 }

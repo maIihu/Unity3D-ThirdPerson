@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
         {
             nextSpawnTime = spawnTimer + Time.time;
             GameObject enemy = enemyObjectPool.GetEnemyObject(enemyType);
-            enemy.transform.position = this.transform.position;
+            enemy.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             enemy.TryGetComponent(out EnemyBase enemyBase);
             enemyBase.bulletObjectPool =  bulletObjectPool;
         }

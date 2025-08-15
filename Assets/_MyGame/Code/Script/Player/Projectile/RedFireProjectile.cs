@@ -16,12 +16,12 @@ public class RedFireProjectile : PlayerProjectile
         {
             if (CharacterOwnerType != target.GetCharacterType)
             {
-                target.TakeDamage(data.damage);
+               // target.TakeDamage(data.damage);
                 Explorer(other.transform.position);
             }
             else return;
         }
-        ReturnToPool();
+        Destroy(gameObject);
         TriggerHitEffect(other.transform.position);
     }
 

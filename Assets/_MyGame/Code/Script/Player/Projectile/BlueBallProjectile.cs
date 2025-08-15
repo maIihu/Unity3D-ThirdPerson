@@ -18,7 +18,7 @@ public class BlueBallProjectile : PlayerProjectile
             }
             else return;
         }
-        ReturnToPool();
+        //Destroy(gameObject);
         TriggerHitEffect(other.transform.position);
     }
 }

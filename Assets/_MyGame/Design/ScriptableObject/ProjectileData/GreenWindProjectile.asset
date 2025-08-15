@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc702c06e01d400b9b6622b603576fec, type: 3}
   m_Name: GreenWindProjectile
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 20
   lifeTime: 2
-  speed: 20
+  speed: 30
+  cooldown: 0.2

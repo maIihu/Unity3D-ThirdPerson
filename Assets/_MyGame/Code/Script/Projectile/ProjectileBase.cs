@@ -9,7 +9,7 @@ public enum CharacterType
 
 public abstract class ProjectileBase : MonoBehaviour
 {
-    [SerializeField] protected ProjectileData data;
+    [SerializeField] public ProjectileData data;
 
     protected Vector3 Direction;
     protected bool IsFlying;
@@ -35,7 +35,8 @@ public abstract class ProjectileBase : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         if (!IsFlying) yield break;
-        ReturnToPool();
+        if(!_bulletObjectPool) Destroy(this.gameObject);
+        else ReturnToPool();
     }
     
     protected void ReturnToPool()
