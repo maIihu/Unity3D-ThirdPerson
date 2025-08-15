@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance{get{return _instance;}}
 
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameData gameData;
+    
     public GameState CurrentState { get; private set; }
 
     public float GameTimer { get; private set; }
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour
             _instance = this;
         
         InitializeState();
-        GameTimer = 60f;
+        GameTimer = gameData.gameTimer;
     }
 
     private void Start()

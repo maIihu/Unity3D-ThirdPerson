@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Header("Normal Enemy")]
     [SerializeField] private EnemyObjectPool enemyObjectPool; 
     [SerializeField] private BulletObjectPool bulletObjectPool;
     [SerializeField] private float spawnTimer;
